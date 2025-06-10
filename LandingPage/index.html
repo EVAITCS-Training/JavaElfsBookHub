@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BookHub</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!-- Header Section -->
-    <div>
+    <div id="header">
         <h1>BookHub</h1>
         <!-- <h2>BookHub</h2>
         <h3>BookHub</h3>
@@ -19,73 +20,75 @@
     <main>
         <section id="features" class="section-container">
             <h2>Why BookHub?</h2>
-            <div>
+            <div class="feature-card">
                 <h3>
                     Track Your Library
                 </h3>
                 <p>Keep all your books organized</p>
             </div>
         </section>
-        <section id="add-book">
-            <h2>Add a Book</h2>
-            <form id="book-form" method="post">
-                <label for="title">Book Title: </label>
-                <input type="text" id="title" required>
-                <input type="text" id="author" placeholder="Author" required>
-                <input type="date" name="publish-date" id="publish-date" required>
-                <input type="number" name="price" id="price" placeholder="Price">
-                <label for="genre">Genre: </label>
-                <select name="genre" id="genre" required>
-                    <option>-- please select a genre --</option>
-                    <option value="fiction">Fiction</option>
-                    <option value="non-fiction">Non-Fiction</option>
-                    <option value="science-fiction">Science Fiction</option>
-                    <option value="fantasy">Fantasy</option>
-                    <option value="science-fantasy">Science Fantasy</option>
-                    <option value="science">Science</option>
-                </select>
-                <input type="submit" value="Add Book">
-            </form>
-        </section>
-        <section id="book-list">
-            <h2>Your Books</h2>
-            <div class="books-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>
-                                Title
-                            </th>
-                            <td>
-                                Author
-                            </td>
-                            <td>
-                                Publish Date
-                            </td>
-                            <td>
-                                Genre
-                            </td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th>
-                                Clean Code
-                            </th>
-                            <td>
-                                Robert C. Martin
-                            </td>
-                            <td>
-                                Aug-1-2008
-                            </td>
-                            <td>
-                                Non-Fiction
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+        <div class="grid-container">
+            <section id="add-book">
+                <h2>Add a Book</h2>
+                <form id="book-form" method="post">
+                    <label for="title">Book Title: </label>
+                    <input type="text" id="title" required>
+                    <input type="text" id="author" placeholder="Author" required>
+                    <input type="date" name="publish-date" id="publish-date" required>
+                    <input type="number" name="price" id="price" placeholder="Price">
+                    <label for="genre">Genre: </label>
+                    <select name="genre" id="genre" required>
+                        <option>-- please select a genre --</option>
+                        <option value="fiction">Fiction</option>
+                        <option value="non-fiction">Non-Fiction</option>
+                        <option value="science-fiction">Science Fiction</option>
+                        <option value="fantasy">Fantasy</option>
+                        <option value="science-fantasy">Science Fantasy</option>
+                        <option value="science">Science</option>
+                    </select>
+                    <input type="submit" value="Add Book">
+                </form>
+            </section>
+            <section id="book-list">
+                <h2>Your Books</h2>
+                <div class="books-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>
+                                    Title
+                                </th>
+                                <td>
+                                    Author
+                                </td>
+                                <td>
+                                    Publish Date
+                                </td>
+                                <td>
+                                    Genre
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>
+                                    Clean Code
+                                </th>
+                                <td>
+                                    Robert C. Martin
+                                </td>
+                                <td>
+                                    Aug-1-2008
+                                </td>
+                                <td>
+                                    Non-Fiction
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
     </main>
 </body>
 </html>

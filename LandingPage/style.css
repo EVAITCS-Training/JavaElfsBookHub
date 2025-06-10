@@ -1,0 +1,72 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family:Arial, Helvetica, sans-serif ;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* Class Style */
+
+.feature-card {
+    background: #f4f4f4;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 1rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 320px auto;
+
+    section {
+        margin: 0 1rem;
+
+        div table thead tr td {
+            margin: 0 1rem;
+            padding: 0 1rem;
+        }
+
+        div table tbody tr td {
+            margin: 0 1rem;
+            padding: 0 1rem;
+        }
+
+        div table tbody tr td:hover {
+            background-color: darkgray;
+            border-radius: 8px;
+        }
+    }
+}
+
+/* ID specfic styles */
+#header {
+    background: #2c3e50;
+    color: white;
+    text-align: center;
+    padding: 2rem;
+}
+
+#features {
+    padding: 1rem 1rem;
+}
+
+#book-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px 0;
+    max-width: 320px;
+}
+
+#book-form input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
