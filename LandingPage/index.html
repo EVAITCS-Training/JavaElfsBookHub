@@ -6,6 +6,10 @@
     <title>BookHub</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="style2.css">
+    <!-- <script>
+        alert("Hello Class")
+    </script> -->
+    
 </head>
 <body>
     <!-- Header Section -->
@@ -31,7 +35,7 @@
         <div class="grid-container">
             <section id="add-book">
                 <h2>Add a Book</h2>
-                <form id="book-form" method="post">
+                <form id="book-form">
                     <label for="title">Book Title: </label>
                     <input type="text" id="title" required>
                     <input type="text" id="author" placeholder="Author" required>
@@ -52,7 +56,7 @@
             </section>
             <section id="book-list">
                 <h2>Your Books</h2>
-                <div class="books-container">
+                <div>
                     <table>
                         <thead>
                             <tr>
@@ -70,7 +74,7 @@
                                 </td>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="books-container">
                             <tr>
                                 <th>
                                     Clean Code
@@ -91,5 +95,6 @@
             </section>
         </div>
     </main>
+    <script rel="text/javascript" src="script.js" ></script>
 </body>
 </html>
