@@ -50,9 +50,15 @@ function displayBooks() {
         <td>${book.author}</td>
         <td>${book.publishDate}</td>
         <td>${book.genre}</td>
+        <td><button onclick="deleteBook(${book.id})">Delete</button></td>
         `;
         bookContainer.appendChild(bookRow);
     });
+}
+
+function deleteBook(id) {
+    books = books.filter(book => book.id !== id);
+    displayBooks();
 }
 
 displayBooks();
