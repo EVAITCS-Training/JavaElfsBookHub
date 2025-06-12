@@ -73,6 +73,9 @@
                                     Genre
                                 </td>
                                 <td>
+                                    Rating
+                                </td>
+                                <td>
                                     Actions
                                 </td>
                             </tr>
@@ -95,6 +98,18 @@
                         </tbody>
                     </table>
                 </div>
+            </section>
+            <section>
+                <h2>
+                    Search for a book
+                </h2>
+                <input 
+                    type="text" 
+                    name="search" 
+                    id="search" 
+                    placeholder="Type in title, author, or genre" 
+                    onkeydown="handleKeyPress()">
+                <div id="search-results"></div>
             </section>
         </div>
     </main>

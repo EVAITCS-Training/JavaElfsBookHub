@@ -12,6 +12,10 @@ body {
 
 /* Class Style */
 
+.gold-star {
+    color: gold;
+}
+
 .feature-card {
     background: #f4f4f4;
     border-radius: 8px;
@@ -22,7 +26,7 @@ body {
 
 .grid-container {
     display: grid;
-    grid-template-columns: 320px auto;
+    grid-template-columns: 320px auto auto;
 
     section {
         margin: 0 1rem;
