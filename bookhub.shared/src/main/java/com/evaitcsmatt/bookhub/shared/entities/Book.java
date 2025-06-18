@@ -16,22 +16,27 @@ public class Book implements Comparable<Book>, Comparator<Book> {
 	//byte(8 bits)(-128 - 127), short(16 bits)(-32,768 - 32,767), int(32 bits), long(64 bits)
 	// decimal primitive data types
 	// double, float
-	private int id;
+	private final int id;
 	private String title;
 	private String author;
 	private LocalDate publishDate;
 	private float price;
 	private String genre;
 	private byte rating;
-	private LocalDateTime dateAdded;
+	private final LocalDateTime dateAdded;
+	
+	private static int idPointer = 1;
 	
 	//Constructor
 	//Is a special method that initializes the instance object from the class object
 	// it called in conjunction with the new keyword
-	public Book() {}
+	public Book() {
+		this.id = idPointer;
+		this.dateAdded = LocalDateTime.now();
+		idPointer++;
+	}
 	
 	public Book(
-			int id,
 			String title,
 			String author, 
 			LocalDate publishDate, 
@@ -51,7 +56,7 @@ public class Book implements Comparable<Book>, Comparator<Book> {
 		if(genre == null|| genre.trim().isEmpty()) {
 			throw new BookInputException("Genre is required to be filled out!");
 		}
-		this.id = id;
+		this.id = idPointer;
 		this.title = title;
 		this.author = author;
 		this.publishDate = publishDate;
@@ -59,6 +64,7 @@ public class Book implements Comparable<Book>, Comparator<Book> {
 		this.genre = genre;
 		this.rating = rating;
 		dateAdded = LocalDateTime.now();
+		idPointer++;
 	}
 	
 	//Getters/Setters
@@ -74,9 +80,9 @@ public class Book implements Comparable<Book>, Comparator<Book> {
 		return id;
 	}
 	
-	public void setId(int id) {
-		this.id = id;
-	}
+//	public void setId(int id) {
+//		this.id = id;
+//	}
 
 	public String getTitle() {
 		return title;
@@ -140,7 +146,8 @@ public class Book implements Comparable<Book>, Comparator<Book> {
 	
 	public void displayBook() {
 		System.out.println("Book Information:\n" + 
-				"Title: " + getTitle() +
+				"Id: " + getId() +
+				"\nTitle: " + getTitle() +
 				"\nAuthor: " + getAuthor() +
 				"\nPublish Date: " + getPublishDate() +
 				"\nPrice: $ " + getPrice() +

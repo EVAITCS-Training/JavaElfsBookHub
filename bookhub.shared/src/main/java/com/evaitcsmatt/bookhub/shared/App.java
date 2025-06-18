@@ -17,7 +17,6 @@ public class App
     {
     	Scanner scanner = new Scanner(System.in);
         Book book1 = new Book();
-        book1.setId(1);
         book1.setTitle("Clean Code");
         book1.setAuthor("Robert C. Martin");
         book1.setPublishDate(LocalDate.of(2008, 8, 1));
@@ -27,7 +26,6 @@ public class App
         System.out.println(book1);
         book1.displayBook();
         Book book2 = new Book(
-        		2, 
         		"The Well-Grounded Java Developer", 
         		"Ben", 
         		LocalDate.of(2023, 2, 7), 
@@ -37,17 +35,26 @@ public class App
         		);
         book2.displayBook();
         
-        System.out.println("Please enter the first number!");
-        int num = scanner.nextInt();
-        System.out.println("Please enter the second number!");
-        int num2 = scanner.nextInt();
-        try {
-        	int results = num/num2;
-        } catch (ArithmeticException e) {
-			System.out.println("You can't divide by zero");
-		} finally {
-			
-		}
+        String strNameString = new String("Robert C. Martin");
+        //Can be used in any minus threading
+        //Not Thread Safe
+        StringBuilder sBuilder = new StringBuilder();
+        //Thread Safe
+        StringBuffer sBuffer = new StringBuffer();
+        
+        System.out.println(book1.getAuthor() == strNameString);
+        
+//        System.out.println("Please enter the first number!");
+//        int num = scanner.nextInt();
+//        System.out.println("Please enter the second number!");
+//        int num2 = scanner.nextInt();
+//        try {
+//        	int results = num/num2;
+//        } catch (ArithmeticException e) {
+//			System.out.println("You can't divide by zero");
+//		} finally {
+//			
+//		}
         //accessFile();
     }
     
