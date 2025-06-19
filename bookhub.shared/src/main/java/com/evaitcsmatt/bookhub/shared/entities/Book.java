@@ -119,10 +119,10 @@ public class Book implements Comparable<Book>, Comparator<Book> {
 	}
 
 	public void setPrice(float price) {
-		if(publishDate == null) {
-			throw new BookInputException("Have to have a publish date whether in future or past!");
-		}
-		this.price = price;
+	    if(price < 0) {
+	        throw new BookInputException("Price cannot be negative!");
+	    }
+	    this.price = price;
 	}
 
 	public String getGenre() {
@@ -187,29 +187,25 @@ public class Book implements Comparable<Book>, Comparator<Book> {
 
 	@Override
 	public int compareTo(Book o) {
-		if (this.title.compareTo(o.title) == 1) {
-			return 1;
-		} else if (this.title.compareTo(o.title) == -1) {
-			return -1;
-		}
-		return 0;
+	    return this.title.compareToIgnoreCase(o.title);
 	}
 
 	@Override
 	public int compare(Book o1, Book o2) {
-		if (o1.title.equalsIgnoreCase(o2.title) &&
-				o1.author.equalsIgnoreCase(o2.author) &&
-				o1.publishDate.equals(o2.publishDate)
-				) {
-			return 1;
-		} else if (
-				!o1.title.equalsIgnoreCase(o2.title) &&
-				!o1.author.equalsIgnoreCase(o2.author) &&
-				!o1.publishDate.equals(o2.publishDate)
-				) {
-			return -1;
-		}
-		return 0;
+	    // Compare by title first
+	    int titleComparison = o1.title.compareToIgnoreCase(o2.title);
+	    if (titleComparison != 0) {
+	        return titleComparison;
+	    }
+	    
+	    // If titles are equal, compare by author
+	    int authorComparison = o1.author.compareToIgnoreCase(o2.author);
+	    if (authorComparison != 0) {
+	        return authorComparison;
+	    }
+	    
+	    // If authors are equal, compare by publish date
+	    return o1.publishDate.compareTo(o2.publishDate);
 	}
 	
 	

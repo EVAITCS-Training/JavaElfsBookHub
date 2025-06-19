@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.evaitcsmatt.bookhub.shared.entities.Book;
+import com.evaitcsmatt.bookhub.shared.exceptions.BookNotFoundException;
 
 public class BookManager {
 	private List<Book> books;
@@ -94,9 +95,9 @@ public class BookManager {
 	}
 	
 	public List<Book> getBooksByGenre(String genre) {
-		return books.stream()
-				.filter(book -> book.getGenre().equalsIgnoreCase(genre))
-				.toList();
+		return books.stream()//converts the collection into a stream object
+				.filter(book -> book.getGenre().equalsIgnoreCase(genre)) //Intermediary operation
+				.toList(); //Terminal Operator
 	}
 	
 	public Map<String, Long> getBookGenreStatistics() {
@@ -105,5 +106,36 @@ public class BookManager {
 						Book::getGenre,
 						Collectors.counting()
 						));
+	}
+	
+	public List<Book> getSortedBooksByPublishedDate() {
+		return books.stream()
+				.sorted((book1, book2) -> book1.getPublishDate().compareTo(book2.getPublishDate()))
+				.toList();
+	}
+	
+	public boolean updateBook(Book book) {
+		Book oldBook = books.stream()
+				.filter(b1 -> b1.getId() == book.getId())
+				.findAny()
+				.orElseThrow(() -> new BookNotFoundException("Book was not found!"));
+		if(oldBook.equals(book)) {
+			return false;
+		}
+		books.replaceAll(b -> b.getId() == book.getId() ? book : b);
+		return true;
+	}
+	
+	public boolean updateRating(int bookId, byte rating) {
+		Book book = books.stream()
+				.filter(b -> b.getId() == bookId)
+				.findFirst()
+				.orElseThrow(() -> new BookNotFoundException("Book was not found!"));
+		book.setRating(rating);
+		return true;
+	}
+	
+	public boolean deleteBookById(int bookId) {
+		return books.removeIf(b -> b.getId() == bookId);
 	}
 }
