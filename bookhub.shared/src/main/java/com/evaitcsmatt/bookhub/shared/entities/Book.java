@@ -36,6 +36,11 @@ public class Book implements Comparable<Book>, Comparator<Book> {
 		idPointer++;
 	}
 	
+	public Book(int id, LocalDateTime dateAdded) {
+		this.id = id;
+		this.dateAdded = dateAdded;
+	}
+	
 	public Book(
 			String title,
 			String author, 
@@ -142,6 +147,10 @@ public class Book implements Comparable<Book>, Comparator<Book> {
 
 	public void setRating(byte rating) {
 		this.rating = rating;
+	}
+	
+	public LocalDateTime getDateAdded() {
+		return dateAdded;
 	}
 	
 	public void displayBook() {

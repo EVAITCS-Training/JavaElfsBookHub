@@ -8,6 +8,7 @@ import java.util.Scanner;
 import com.evaitcsmatt.bookhub.shared.entities.Book;
 import com.evaitcsmatt.bookhub.shared.example.Animal;
 import com.evaitcsmatt.bookhub.shared.managers.BookManager;
+import com.evaitcsmatt.bookhub.shared.ui.BookHubConsole;
 
 /**
  * Hello world!
@@ -17,15 +18,15 @@ public class App
 {
     public static void main( String[] args )
     {
-    	Scanner scanner = new Scanner(System.in);
-    	BookManager bookManager = new BookManager();
-    	System.out.println("Beginning to add book");
-    	bookManager.addBook("Gantz", "Hiroya Oku", LocalDate.of(2000, 6, 1), "Manga");
-    	System.out.println("Book added");
-    	bookManager.addBook("Clean Code", "Robert C. Martin", LocalDate.of(2008, 8, 1), "Non Fiction",(byte) 4);
-    	System.out.println("Book Added");
-    	
-    	System.out.println(bookManager.getBookGenreStatistics());
+//    	Scanner scanner = new Scanner(System.in);
+//    	BookManager bookManager = new BookManager();
+//    	System.out.println("Beginning to add book");
+//    	bookManager.addBook("Gantz", "Hiroya Oku", LocalDate.of(2000, 6, 1), "Manga");
+//    	System.out.println("Book added");
+//    	bookManager.addBook("Clean Code", "Robert C. Martin", LocalDate.of(2008, 8, 1), "Non Fiction",(byte) 4);
+//    	System.out.println("Book Added");
+//    	
+//    	System.out.println(bookManager.getBookGenreStatistics());
 //        Book book1 = new Book();
 //        book1.setTitle("Clean Code");
 //        book1.setAuthor("Robert C. Martin");
@@ -81,6 +82,9 @@ public class App
 //				
 //			}
 //		};
+    	
+    	BookHubConsole console = new BookHubConsole();
+    	console.start();
     }
     
     private static void accessFile() throws IOException {

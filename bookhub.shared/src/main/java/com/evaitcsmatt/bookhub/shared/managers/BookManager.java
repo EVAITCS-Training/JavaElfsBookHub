@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import com.evaitcsmatt.bookhub.shared.entities.Book;
@@ -75,6 +76,12 @@ public class BookManager {
 		return books;
 	}
 	
+	public Book getBookById(int bookId) {
+		return books.stream().filter(book -> book.getId() == bookId)
+				.findFirst()
+				.orElseThrow(() -> new BookNotFoundException("Book not found!"));
+	}
+	
 	public Book getBookByTitle(String title) {
 		for (int i = 0; i < books.size(); i++) {
 			if(books.get(i).getTitle().equalsIgnoreCase(title)) {
@@ -122,6 +129,7 @@ public class BookManager {
 		if(oldBook.equals(book)) {
 			return false;
 		}
+		
 		books.replaceAll(b -> b.getId() == book.getId() ? book : b);
 		return true;
 	}
