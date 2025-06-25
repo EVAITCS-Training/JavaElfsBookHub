@@ -3,12 +3,15 @@ package com.evaitcsmatt.bookhub.shared;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import com.evaitcsmatt.bookhub.shared.entities.Book;
 import com.evaitcsmatt.bookhub.shared.example.Animal;
 import com.evaitcsmatt.bookhub.shared.managers.BookManager;
 import com.evaitcsmatt.bookhub.shared.ui.BookHubConsole;
+import com.evaitcsmatt.bookhub.shared.utils.BookFileHandler;
 
 /**
  * Hello world!
@@ -85,6 +88,28 @@ public class App
     	
     	BookHubConsole console = new BookHubConsole();
     	console.start();
+    	
+//    	List<Book> books = new ArrayList<Book>();
+//    	books.add(new Book("To Kill a Mockingbird",
+//            "Harper Lee",
+//            LocalDate.of(1960, 7, 11),
+//            12.99f,
+//            "Fiction",
+//            (byte) 5
+//            ));
+//    	books.add(new Book("To Kill a Mockingbird",
+//            "Harper Lee",
+//            LocalDate.of(1960, 7, 11),
+//            12.99f,
+//            "Fiction",
+//            (byte) 5
+//            ));
+//    	BookFileHandler.saveBooks(books);
+//    	
+//    	List<Book> newList = BookFileHandler.loadBooks();
+//    	books.forEach(System.out::println);
+//    	System.out.println(newList);
+//    	newList.forEach(System.out::println);
     }
     
     private static void accessFile() throws IOException {
