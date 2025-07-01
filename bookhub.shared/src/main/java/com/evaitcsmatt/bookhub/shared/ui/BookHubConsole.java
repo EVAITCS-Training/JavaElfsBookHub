@@ -11,9 +11,9 @@ public class BookHubConsole {
 	private BookManager bookManager;
 	private Scanner scanner;
 	
-	public BookHubConsole() {
-		bookManager = new BookManager();
-		scanner = new Scanner(System.in);
+	public BookHubConsole(BookManager bookManager, Scanner scanner) {
+		this.bookManager = bookManager;
+		this.scanner = scanner;
 	}
 	
 	public void start() {

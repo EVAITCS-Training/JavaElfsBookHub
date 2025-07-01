@@ -2,6 +2,7 @@ package com.evaitcsmatt.bookhub.shared;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.Scanner;
 import com.evaitcsmatt.bookhub.shared.entities.Book;
 import com.evaitcsmatt.bookhub.shared.example.Animal;
 import com.evaitcsmatt.bookhub.shared.managers.BookManager;
+import com.evaitcsmatt.bookhub.shared.repository.BookRepository;
 import com.evaitcsmatt.bookhub.shared.ui.BookHubConsole;
 import com.evaitcsmatt.bookhub.shared.utils.BookFileHandler;
 
@@ -21,8 +23,8 @@ public class App
 {
     public static void main( String[] args )
     {
-//    	Scanner scanner = new Scanner(System.in);
-//    	BookManager bookManager = new BookManager();
+    	Scanner scanner = new Scanner(System.in);
+    	BookManager bookManager = new BookManager();
 //    	System.out.println("Beginning to add book");
 //    	bookManager.addBook("Gantz", "Hiroya Oku", LocalDate.of(2000, 6, 1), "Manga");
 //    	System.out.println("Book added");
@@ -85,9 +87,25 @@ public class App
 //				
 //			}
 //		};
+    	Book book3 = new Book(
+    			"Test",
+                "Test",
+                LocalDate.of(1995, 8, 1),
+                16.06f,
+                "Science Fiction",
+                (byte) 4
+                );
     	
-    	BookHubConsole console = new BookHubConsole();
-    	console.start();
+    	BookHubConsole console = new BookHubConsole(bookManager, scanner);
+    	BookRepository bookRepository = new BookRepository();
+    	try {
+			bookRepository.findAll().forEach(System.out::println);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	//System.out.println(bookRepository.save(book3));
+    	//console.start();
     	
 //    	List<Book> books = new ArrayList<Book>();
 //    	books.add(new Book("To Kill a Mockingbird",

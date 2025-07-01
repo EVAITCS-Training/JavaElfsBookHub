@@ -9,16 +9,13 @@ public class Review implements Comparable<Review> {
 	private byte rating;
 	private LocalDateTime dateCreated;
 
-	private static int idPointer = 1;
 	
 	public Review() {
-		this.reviewId = idPointer++;
 		this.dateCreated = LocalDateTime.now();
 	}
 	
 	public Review(String username, String comment, byte rating) {
 		this.username = username.isBlank() ? "Anonymous User" : username;
-		this.reviewId = idPointer++;
 		this.comment = comment;
 		this.rating = rating;
 		this.dateCreated = LocalDateTime.now();

@@ -29,16 +29,13 @@ public class Book implements Comparable<Book>, Comparator<Book> {
 	
 	private List<Review> reviews;
 	
-	private static int idPointer = 1;
 	
 	//Constructor
 	//Is a special method that initializes the instance object from the class object
 	// it called in conjunction with the new keyword
 	public Book() {
-		this.id = idPointer;
 		this.dateAdded = LocalDateTime.now();
 		this.reviews = new ArrayList<Review>();
-		idPointer++;
 	}
 	
 	public Book(int id, LocalDateTime dateAdded) {
@@ -67,7 +64,6 @@ public class Book implements Comparable<Book>, Comparator<Book> {
 		if(genre == null|| genre.trim().isEmpty()) {
 			throw new BookInputException("Genre is required to be filled out!");
 		}
-		this.id = idPointer;
 		this.title = title;
 		this.author = author;
 		this.publishDate = publishDate;
@@ -76,7 +72,6 @@ public class Book implements Comparable<Book>, Comparator<Book> {
 		this.rating = rating;
 		this.reviews = new ArrayList<Review>();
 		dateAdded = LocalDateTime.now();
-		idPointer++;
 	}
 	
 	//Getters/Setters
