@@ -1,11 +1,13 @@
 package com.evaitcsmatt.bookhub.shared.ui;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Optional;
 import java.util.Scanner;
 
 import com.evaitcsmatt.bookhub.shared.entities.Book;
 import com.evaitcsmatt.bookhub.shared.managers.BookManager;
+import com.evaitcsmatt.bookhub.shared.repository.DatabaseConnection;
 
 public class BookHubConsole {
 	private BookManager bookManager;
@@ -38,7 +40,19 @@ public class BookHubConsole {
 				break;
 			case 11:
 				System.out.println("Goodbye!");
-				return;
+				bookManager.shutDownAutoSave();
+				System.out.println("Auto Save Shutdown");
+				scanner.close();
+				System.out.println("Scanner Closed!");
+				try {
+					System.out.println("Closing Database Connection!");
+					DatabaseConnection.getInstance().getConnection().close();
+					System.out.println("Connection Closed");
+					
+				} catch (SQLException e) {
+					System.err.println("Error occurred while closing the Connection!");
+				}
+				System.exit(0);
 			default:
 				System.out.println("Invalid Choice!");
 			}
@@ -190,7 +204,7 @@ public class BookHubConsole {
 		if(bookManager.deleteBookById(choice)) {
 			System.out.println("Book successfully deleted!");
 		} else {
-			System.err.println("Invalid Book Choice");
+			System.err.println("Error has occurred");
 		}
 	}
 }

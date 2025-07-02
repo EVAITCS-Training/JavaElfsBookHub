@@ -75,4 +75,40 @@ public class BookRepository {
 			return books;
 		}
 	}
+	
+	public Book updateBook(Book book) throws SQLException {
+		String sqlString = "UPDATE books SET title=?, author=?, publish_date=?, " +
+				"price=?, genre=?, rating=? WHERE id=?";
+		try (PreparedStatement preparedStatement = connection.prepareStatement(sqlString)){
+			preparedStatement.setString(1, book.getTitle());
+			preparedStatement.setString(2, book.getAuthor());
+			preparedStatement.setDate(3, Date.valueOf(book.getPublishDate()));
+			preparedStatement.setFloat(4, book.getPrice());
+			preparedStatement.setString(5, book.getGenre());
+			preparedStatement.setByte(6, book.getRating());
+			preparedStatement.setInt(7, book.getId());
+			int row = preparedStatement.executeUpdate();
+			if(row > 0) {
+				System.out.println("Book Update successful!");
+			} else {
+				System.err.println("An error has occurred while updating data!");
+			}
+		}
+		return book;
+	}
+	
+	public void deleteById(int id) throws SQLException{
+		String sqlString = "DELETE FROM books WHERE id = ?";
+		try(PreparedStatement prepareStatement = connection.prepareStatement(sqlString)){
+			prepareStatement.setInt(1,id);
+			int row = prepareStatement.executeUpdate();
+			if(row>0) {
+				System.out.println("Book Deletion Successful");
+			}else {
+				System.err.println("an Error has occured while deleting the book");
+			}
+			
+		}
+		
+	}
 }

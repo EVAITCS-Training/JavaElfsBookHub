@@ -1,5 +1,6 @@
 package com.evaitcsmatt.bookhub.shared.managers;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,20 +11,31 @@ import java.util.stream.Collectors;
 
 import com.evaitcsmatt.bookhub.shared.entities.Book;
 import com.evaitcsmatt.bookhub.shared.exceptions.BookNotFoundException;
+import com.evaitcsmatt.bookhub.shared.repository.BookRepository;
 import com.evaitcsmatt.bookhub.shared.utils.BookFileHandler;
 
 public class BookManager {
 	private List<Book> books;
 	private boolean currentUpdateTracker = false;
 	private ExecutorService executorService;
+	private BookRepository bookRepository;
 	
-	{
-		executorService = Executors.newSingleThreadExecutor();
-		books = BookFileHandler.loadBooks();
-		executorService.submit(autoSaveRunnable());
+//	{
+//		executorService = Executors.newSingleThreadExecutor();
+//		books = BookFileHandler.loadBooks();
+//		executorService.submit(autoSaveRunnable());
+//	}
+	
+	public BookManager(BookRepository bookRepository) {
+		this.bookRepository = bookRepository;
+		try {
+			this.books = this.bookRepository.findAll();
+		} catch (SQLException e) {
+			System.err.println("Error occurred when loading the data into the app.");
+		}
+		this.executorService = Executors.newSingleThreadExecutor();
+		this.executorService.submit(autoSaveRunnable());
 	}
-	
-	public BookManager() {}
 
 	public void addBook(
 			String title, 
@@ -157,9 +169,11 @@ public class BookManager {
 	
 	public boolean deleteBookById(int bookId) {
 		try {
+			bookRepository.deleteById(bookId);
 			return books.removeIf(b -> b.getId() == bookId);			
-		} finally {
-			currentUpdateTracker = true;			
+		} catch (SQLException e) {
+			System.err.println("Error Occurred while Deleting");
+			return false;
 		}
 	}
 	
@@ -167,7 +181,19 @@ public class BookManager {
 		Runnable runnable = () -> {
 			while(true) {
 				if(currentUpdateTracker) {
-					BookFileHandler.saveBooks(books);
+					//BookFileHandler.saveBooks(books);
+					books.forEach(book -> {
+						if(book.getId() <= 0) {
+							bookRepository.save(book);
+						} else if (!book.getTitle().isBlank()) {
+							try {
+								bookRepository.updateBook(book);
+							} catch (SQLException e) {
+								System.err.println("Error occurred when updating book with id: " + 
+							book.getId() + " Error Message: " + e.getMessage());
+							}
+						}
+					});
 					currentUpdateTracker = false;
 				}
 				try {
@@ -178,5 +204,10 @@ public class BookManager {
 			}
 		};
 		return runnable;
+	}
+	
+	public void shutDownAutoSave() {
+		executorService.shutdown();
+		System.out.println("Auto Save Thread shutting down.");
 	}
 }
