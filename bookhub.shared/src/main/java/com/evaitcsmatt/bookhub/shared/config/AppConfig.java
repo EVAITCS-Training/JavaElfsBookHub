@@ -3,13 +3,17 @@ package com.evaitcsmatt.bookhub.shared.config;
 import java.util.Scanner;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 import com.evaitcsmatt.bookhub.shared.managers.BookManager;
 import com.evaitcsmatt.bookhub.shared.repository.BookRepository;
 import com.evaitcsmatt.bookhub.shared.ui.BookHubConsole;
 
 @Configuration
+@EnableAspectJAutoProxy
+@ComponentScan("com.evaitcsmatt.bookhub.shared")
 public class AppConfig {
 	
 	@Bean

@@ -3,11 +3,18 @@ package com.evaitcsmatt.bookhub.shared.managers;
 import java.util.Iterator;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.evaitcsmatt.bookhub.shared.entities.Book;
 import com.evaitcsmatt.bookhub.shared.entities.Review;
 import com.evaitcsmatt.bookhub.shared.exceptions.ReviewInputException;
+import com.evaitcsmatt.bookhub.shared.repository.ReviewRepository;
 
 public class ReviewManager {
+	
+	@Autowired
+	private ReviewRepository repository;
+	
 	public static List<Review> getAllBookReviews(Book book){
 		return book.getReviews();
 	}
