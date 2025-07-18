@@ -1,7 +1,10 @@
 package com.evaitcsmatt.bookhub.webserver;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -11,8 +14,13 @@ import org.springframework.data.domain.Pageable;
 import com.evaitcsmatt.bookhub.webserver.entities.Book;
 import com.evaitcsmatt.bookhub.webserver.repositories.BookRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
 @SpringBootApplication
+@Slf4j
 public class WebserverApplication implements CommandLineRunner {
+	//private static final Logger LOGGER = LoggerFactory.getLogger(WebserverApplication.class);
+	
 	
 	@Autowired
 	private BookRepository bookRepository;
@@ -23,16 +31,11 @@ public class WebserverApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Book book = new Book();
-		book.setTitle("IT");
-		book.setAuthor("Stephan King");
-		book.setGenre("Horror");
-		book.setPrice(15.99f);
-		book.setRating((byte)5);
-		book.setPublishDate(LocalDate.of(1986, 9, 15));
-		bookRepository.save(book);
-		bookRepository.findAll(Pageable.unpaged()).forEach(System.out::println);;
-		
+	
+		log.info(String.valueOf(bookRepository.countByTitle("Dune")));
+		log.info(List.of(bookRepository.findAllByAuthor("Robert C. Martin")).toString());
+		log.info(bookRepository.getStatsOfLibrary().toString());
+		log.info(bookRepository.findAllByGenreIgnoreCase("fiction").toString());
 	}
 
 }
