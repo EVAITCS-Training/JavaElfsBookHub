@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookHub</title>
+    <link rel="stylesheet" th:href="@{/css/global-style.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div th:replace="layout :: navbar"></div>
+    <div class="content">
+    	<table>
+    		<thead>
+	    		<tr>
+	    			<th>
+	    				Title
+	    			</th>
+	    			<th>
+	    				Author
+	    			</th>
+	    			<th>
+	    				Genre
+	    			</th>
+	    			<th>
+	    				Rating
+	    			</th>
+	   			</tr>
+    		</thead>
+    		<tbody>
+    			<tr th:each="book : ${listOfBooks}">
+    				<td th:text="${book.title}">Book Name</td>
+    				<td th:text="${book.author}">Author</td>
+    				<td th:text="${book.genre}">Genre</td>
+    				<td class="rating-cell">
+	                    <!-- Read-only Average Rating -->
+	                    <div class="star-rating readonly">
+	                        <span th:each="star : ${#numbers.sequence(1, 5)}" 
+	                              class="star"
+	                              th:classappend="${star <= book.rating} ? 'gold-star' : 'empty-star'">★</span>
+	                        <span class="rating-text" th:if="${book.rating > 0}">
+	                            (<span th:text="${#numbers.formatDecimal(book.rating, 1, 1)}">0.0</span>/5)
+	                        </span>
+	                    </div>
+	                </td>
+    			</tr>
+    		</tbody>
+    	</table>
+    </div>
+    <div th:replace="layout :: footer"></div>
+</body>
+</html>

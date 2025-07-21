@@ -4,24 +4,139 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BookHub</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="style2.css">
-    <!-- <script>
-        alert("Hello Class")
-    </script> -->
-    
+    <link rel="stylesheet" th:href="@{/css/global-style.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-    <!-- Header Section -->
-    <div id="header">
-        <h1>BookHub</h1>
-        <!-- <h2>BookHub</h2>
-        <h3>BookHub</h3>
-        <h4>BookHub</h4>
-        <h5>BookHub</h5>
-        <h6>BookHub</h6> -->
-        <p>Track, Review, and Share Your Reading Journey</p>
-    </div>
+    <div th:replace="layout :: navbar"></div>
     
+    <main class="content">
+        <!-- Hero Section -->
+        <section id="header">
+            <div class="hero-content">
+                <h1>BookHub</h1>
+                <p class="hero-subtitle">Track, Review, and Share Your Reading Journey</p>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">10K+</span>
+                        <span class="stat-label">Books Tracked</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">2.5K+</span>
+                        <span class="stat-label">Active Readers</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">15K+</span>
+                        <span class="stat-label">Reviews Written</span>
+                    </div>
+                </div>
+                <div class="cta-buttons">
+                    <a href="/register" class="btn btn-primary">Get Started Free</a>
+                    <a href="/demo" class="btn btn-secondary">View Demo</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features">
+            <div class="container">
+                <h2 class="section-title">Why Choose BookHub?</h2>
+                <div class="grid-container">
+                    <div class="feature-card">
+                        <div class="feature-icon">📚</div>
+                        <h3>Track Your Library</h3>
+                        <p>Organize your books into custom shelves: currently reading, want to read, and completed. Never lose track of your literary adventures again.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">⭐</div>
+                        <h3>Rate & Review</h3>
+                        <p>Share your thoughts with our <span class="gold-star">★★★★★</span> rating system and write detailed reviews to help other readers discover great books.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3>Reading Analytics</h3>
+                        <p>Visualize your reading habits with insightful charts, track your annual goals, and discover patterns in your reading preferences.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">👥</div>
+                        <h3>Social Reading</h3>
+                        <p>Connect with fellow book lovers, share recommendations, and participate in reading challenges with our vibrant community.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🔍</div>
+                        <h3>Smart Search</h3>
+                        <p>Find books instantly with our advanced search featuring filters by genre, author, publication year, and reader ratings.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">📱</div>
+                        <h3>Mobile Ready</h3>
+                        <p>Access your library anywhere with our responsive design that works seamlessly on desktop, tablet, and mobile devices.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section id="testimonials">
+            <div class="container">
+                <h2 class="section-title">What Our Readers Say</h2>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <div class="testimonial-stars">
+                            <span class="gold-star">★★★★★</span>
+                        </div>
+                        <p>"BookHub has completely transformed how I track my reading. The analytics feature helps me stay motivated to reach my yearly goals!"</p>
+                        <div class="testimonial-author">
+                            <strong>Sarah Chen</strong>
+                            <span>Avid Reader, 127 books tracked</span>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="testimonial-stars">
+                            <span class="gold-star">★★★★★</span>
+                        </div>
+                        <p>"The social features are amazing! I've discovered so many great books through the community recommendations."</p>
+                        <div class="testimonial-author">
+                            <strong>Marcus Johnson</strong>
+                            <span>Book Club Leader, 89 books tracked</span>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="testimonial-stars">
+                            <span class="gold-star">★★★★★</span>
+                        </div>
+                        <p>"Clean interface, powerful features. As a developer, I appreciate the attention to UX detail and performance."</p>
+                        <div class="testimonial-author">
+                            <strong>Alex Rivera</strong>
+                            <span>Software Engineer, 203 books tracked</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section id="final-cta">
+            <div class="container">
+                <div class="cta-content">
+                    <h2>Ready to Start Your Reading Journey?</h2>
+                    <p>Join thousands of readers who are already tracking their books with BookHub. It's free to get started!</p>
+                    <div class="cta-buttons">
+                        <a href="/register" class="btn btn-primary btn-large">Create Your Free Account</a>
+                        <p class="cta-note">No credit card required • Free forever</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <div th:replace="layout :: footer"></div>
     </body>
 </html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/global-style.css}">
+    <title th:text="${pageTitle} ?: 'BookHub'">BookHub</title>
+</head>
+<body>
+    <!-- Enhanced Navbar Fragment -->
+    <nav class="navbar" th:fragment="navbar">
+        <div class="navbar-container">
+            <!-- Brand/Logo -->
+            <a href="/" th:href="@{/}" class="navbar-brand">
+                <span class="brand-icon">📚</span>
+                BookHub
+            </a>
+            
+            <!-- Mobile Toggle Button -->
+            <button class="navbar-toggle" id="navbarToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <!-- Navigation Links -->
+            <ul class="navbar-nav" id="navbarNav">
+                <li class="nav-item">
+                    <a href="/" th:href="@{/}" class="nav-link">
+                        Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/books" th:href="@{/books}" class="nav-link">
+                        My Books
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/search" th:href="@{/search}" class="nav-link">
+                        Search
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/community" th:href="@{/community}" class="nav-link">
+                        Community
+                    </a>
+                </li>
+                <li class="nav-item" th:if="${user == null}">
+                    <a href="/login" th:href="@{/login}" class="nav-link">
+                        Login
+                    </a>
+                </li>
+                <li class="nav-item" th:if="${user == null}">
+                    <a href="/register" th:href="@{/register}" class="nav-link">
+                        Sign Up
+                    </a>
+                </li>
+                <li class="nav-item" th:if="${user != null}">
+                    <a href="/profile" th:href="@{/profile}" class="nav-link">
+                        Profile
+                    </a>
+                </li>
+                <li class="nav-item" th:if="${user != null}">
+                    <a href="/logout" th:href="@{/logout}" class="nav-link">
+                        Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Content Fragment -->
+    <main class="content" th:fragment="content">
+        <!-- Page content will be inserted here -->
+    </main>
+
+    <!-- Enhanced Footer Fragment -->
+    <footer class="footer" th:fragment="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <!-- Company Info -->
+                <div class="footer-section">
+                    <h3>BookHub</h3>
+                    <p>Your ultimate companion for tracking, reviewing, and sharing your reading journey. Join thousands of readers who are already discovering their next favorite book.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook">📘</a>
+                        <a href="#" aria-label="Twitter">🐦</a>
+                        <a href="#" aria-label="Instagram">📷</a>
+                        <a href="#" aria-label="LinkedIn">💼</a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/" th:href="@{/}">Home</a></li>
+                        <li><a href="/books" th:href="@{/books}">My Books</a></li>
+                        <li><a href="/search" th:href="@{/search}">Search Books</a></li>
+                        <li><a href="/community" th:href="@{/community}">Community</a></li>
+                        <li><a href="/reading-challenges" th:href="@{/reading-challenges}">Reading Challenges</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Support -->
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="/help" th:href="@{/help}">Help Center</a></li>
+                        <li><a href="/contact" th:href="@{/contact}">Contact Us</a></li>
+                        <li><a href="/faq" th:href="@{/faq}">FAQ</a></li>
+                        <li><a href="/feedback" th:href="@{/feedback}">Send Feedback</a></li>
+                        <li><a href="/bug-report" th:href="@{/bug-report}">Report a Bug</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Legal -->
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="/privacy" th:href="@{/privacy}">Privacy Policy</a></li>
+                        <li><a href="/terms" th:href="@{/terms}">Terms of Service</a></li>
+                        <li><a href="/cookies" th:href="@{/cookies}">Cookie Policy</a></li>
+                        <li><a href="/data-policy" th:href="@{/data-policy}">Data Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                &copy; <span th:text="${T(java.time.Year).now().value}">2025</span> 
+                <a href="https://evaitconsulting.com" target="_blank">EVA IT Consulting Services</a>. 
+                All rights reserved. | 
+                Made with ❤️ for book lovers
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Mobile Menu -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navbarToggle = document.getElementById('navbarToggle');
+            const navbarNav = document.getElementById('navbarNav');
+            
+            if (navbarToggle && navbarNav) {
+                navbarToggle.addEventListener('click', function() {
+                    navbarToggle.classList.toggle('active');
+                    navbarNav.classList.toggle('active');
+                });
+                
+                // Close menu when clicking on a link (mobile)
+                navbarNav.addEventListener('click', function(e) {
+                    if (e.target.classList.contains('nav-link')) {
+                        navbarToggle.classList.remove('active');
+                        navbarNav.classList.remove('active');
+                    }
+                });
+                
+                // Close menu when clicking outside (mobile)
+                document.addEventListener('click', function(e) {
+                    if (!navbarToggle.contains(e.target) && !navbarNav.contains(e.target)) {
+                        navbarToggle.classList.remove('active');
+                        navbarNav.classList.remove('active');
+                    }
+                });
+            }
+            
+            // Navbar scroll effect
+            const navbar = document.querySelector('.navbar');
+            if (navbar && navbar.classList.contains('navbar-transparent')) {
+                window.addEventListener('scroll', function() {
+                    if (window.scrollY > 50) {
+                        navbar.classList.add('scrolled');
+                    } else {
+                        navbar.classList.remove('scrolled');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
