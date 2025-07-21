@@ -3,6 +3,7 @@ package com.evaitcsmatt.bookhub.webserver.service;
 import java.util.List;
 
 import com.evaitcsmatt.bookhub.webserver.dto.BookDto;
+import com.evaitcsmatt.bookhub.webserver.dto.PostNewBook;
 import com.evaitcsmatt.bookhub.webserver.entities.Book;
 
 public interface BookService {
@@ -11,4 +12,8 @@ public interface BookService {
 	List<BookDto> getAllBooksByGenre(String genre);
 	BookDto getBookByTitle(String title);
 	BookDto getBookById(int id);
+	BookDto createBook(PostNewBook book);
+	BookDto updateRating(int bookId, byte rating);
+	BookDto updateBook(BookDto book);
+	void deleteBookById(int bookId);
 }
