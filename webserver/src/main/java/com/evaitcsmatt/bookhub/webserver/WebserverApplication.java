@@ -11,8 +11,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.domain.Pageable;
 
+import com.evaitcsmatt.bookhub.webserver.dto.PostNewBook;
+import com.evaitcsmatt.bookhub.webserver.dto.PostNewBookAdmin;
 import com.evaitcsmatt.bookhub.webserver.entities.Book;
 import com.evaitcsmatt.bookhub.webserver.repositories.BookRepository;
+import com.evaitcsmatt.bookhub.webserver.utils.BookServiceFactory;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,7 +26,7 @@ public class WebserverApplication implements CommandLineRunner {
 	
 	
 	@Autowired
-	private BookRepository bookRepository;
+	private BookServiceFactory bookServiceFactory;
 
 	public static void main(String[] args) {
 		SpringApplication.run(WebserverApplication.class, args);
@@ -31,11 +34,6 @@ public class WebserverApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-	
-		log.info(String.valueOf(bookRepository.countByTitle("Dune")));
-		log.info(List.of(bookRepository.findAllByAuthor("Robert C. Martin")).toString());
-		log.info(bookRepository.getStatsOfLibrary().toString());
-		log.info(bookRepository.findAllByGenreIgnoreCase("fiction").toString());
 	}
 
 }

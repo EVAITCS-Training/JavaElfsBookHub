@@ -60,4 +60,39 @@ public class Book {
 	@OneToMany(mappedBy = "book", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.EAGER)
 	@JsonManagedReference
 	private List<Review> reviews;
+
+	public Book(int id,
+			@Size(min = 2, max = 150, message = "Title has to between 2 and 150 characters long!") String title,
+			@Size(min = 3, max = 300) String author,
+			LocalDate publishDate, 
+			@Size(min = 6, max = 30) String genre,
+			@Min(1) @Max(5) byte rating) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.author = author;
+		this.publishDate = publishDate;
+		this.genre = genre;
+		this.rating = rating;
+		this.price = 0.00f;
+	}
+
+	public Book(
+			int id, 
+			String title, 
+			String author, 
+			LocalDate publishDate, 
+			String genre, 
+			byte rating,
+			float price) {
+		this.id = id;
+		this.title = title;
+		this.author = author;
+		this.publishDate = publishDate;
+		this.genre = genre;
+		this.rating = rating;
+		this.price = price;
+	}
+	
+	
 }

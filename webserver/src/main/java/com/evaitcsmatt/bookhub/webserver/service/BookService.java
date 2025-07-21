@@ -6,14 +6,14 @@ import com.evaitcsmatt.bookhub.webserver.dto.BookDto;
 import com.evaitcsmatt.bookhub.webserver.dto.PostNewBook;
 import com.evaitcsmatt.bookhub.webserver.entities.Book;
 
-public interface BookService {
-	List<BookDto> getAllBooks();
-	List<BookDto> getAllBooksByAuthor(String author);
-	List<BookDto> getAllBooksByGenre(String genre);
-	BookDto getBookByTitle(String title);
-	BookDto getBookById(int id);
-	BookDto createBook(PostNewBook book);
-	BookDto updateRating(int bookId, byte rating);
-	BookDto updateBook(BookDto book);
+public interface BookService<T extends BookDto, P extends PostNewBook> {
+	List<T> getAllBooks();
+	List<T> getAllBooksByAuthor(String author);
+	List<T> getAllBooksByGenre(String genre);
+	T getBookByTitle(String title);
+	T getBookById(int id);
+	T createBook(P book);
+	T updateRating(int bookId, byte rating);
+	T updateBook(T book);
 	void deleteBookById(int bookId);
 }

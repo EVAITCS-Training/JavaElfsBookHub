@@ -3,13 +3,19 @@ package com.evaitcsmatt.bookhub.webserver.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Service;
+
 import com.evaitcsmatt.bookhub.webserver.dto.BookDto;
 import com.evaitcsmatt.bookhub.webserver.dto.PostNewBook;
 import com.evaitcsmatt.bookhub.webserver.entities.Book;
 import com.evaitcsmatt.bookhub.webserver.exceptions.BookNotFoundException;
 import com.evaitcsmatt.bookhub.webserver.repositories.BookRepository;
+import com.evaitcsmatt.bookhub.webserver.utils.BookMapper;
 
-public class UserBookServiceImpl implements BookService {
+@Service
+@Primary
+public class UserBookServiceImpl implements BookService<BookDto, PostNewBook> {
 	
 	private final BookRepository bookRepository;
 	
@@ -23,13 +29,7 @@ public class UserBookServiceImpl implements BookService {
 				.findAll()
 				.stream()
 				.map(book -> {
-					return new BookDto(
-							book.getId(), 
-							book.getTitle(), 
-							book.getAuthor(), 
-							book.getGenre(), 
-							book.getRating()
-							);
+					return BookMapper.bookToBookDto(book);
 				})
 				.toList();
 	}
@@ -40,13 +40,7 @@ public class UserBookServiceImpl implements BookService {
 				.findAllByAuthor(author)
 				.stream()
 				.map(book -> {
-					return new BookDto(
-							book.getId(), 
-							book.getTitle(), 
-							book.getAuthor(), 
-							book.getGenre(), 
-							book.getRating()
-							);
+					return BookMapper.bookToBookDto(book);
 				})
 				.toList();
 	}
@@ -57,13 +51,7 @@ public class UserBookServiceImpl implements BookService {
 				.findAllByGenreIgnoreCase(genre)
 				.stream()
 				.map(book -> {
-					return new BookDto(
-							book.getId(), 
-							book.getTitle(), 
-							book.getAuthor(), 
-							book.getGenre(), 
-							book.getRating()
-							);
+					return BookMapper.bookToBookDto(book);
 				})
 				.toList();
 	}
@@ -73,42 +61,58 @@ public class UserBookServiceImpl implements BookService {
 		Book book = bookRepository.findByTitle(title)
 				.orElseThrow(() -> 
 				new BookNotFoundException("Book with title ".concat(title).concat(" not found!")));
-		return new BookDto(
-				book.getId(), 
-				book.getTitle(), 
-				book.getAuthor(), 
-				book.getGenre(), 
-				book.getRating());
+		return BookMapper.bookToBookDto(book);
 	}
 
 	@Override
 	public BookDto getBookById(int id) {
-		Book book = bookRepository.findById(id)
-		return null;
+		Book book = bookRepository.findById(id).orElseThrow(() -> 
+				new BookNotFoundException("Book with id "
+						.concat(Integer.toString(id))
+						.concat(" not found")));
+		return BookMapper.bookToBookDto(book);
 	}
 
 	@Override
 	public BookDto createBook(PostNewBook book) {
-		// TODO Auto-generated method stub
-		return null;
+		Book newBook = bookRepository.save(
+				new Book(0, 
+						book.getTitle(), 
+						book.getAuthor(), 
+						book.getPublishDate(), 
+						book.getGenre(), 
+						book.getRating()));
+		return BookMapper.bookToBookDto(newBook);
 	}
 
 	@Override
 	public BookDto updateRating(int bookId, byte rating) {
-		// TODO Auto-generated method stub
-		return null;
+		Book book = bookRepository.findById(bookId).orElseThrow(() -> 
+		new BookNotFoundException("Book with id "
+				.concat(Integer.toString(bookId))
+				.concat(" not found")));
+		book.setRating(rating);
+		book = bookRepository.save(book);
+		return BookMapper.bookToBookDto(book);
 	}
 
 	@Override
 	public BookDto updateBook(BookDto book) {
-		// TODO Auto-generated method stub
-		return null;
+		Book oldBook = bookRepository.findById(book.getId()).orElseThrow(() -> 
+		new BookNotFoundException("Book with id "
+				.concat(Integer.toString(book.getId()))
+				.concat(" not found")));
+		oldBook.setTitle(book.getTitle());
+		oldBook.setAuthor(book.getAuthor());
+		oldBook.setGenre(book.getGenre());
+		oldBook.setRating(book.getRating());
+		oldBook = bookRepository.save(oldBook);
+		return BookMapper.bookToBookDto(oldBook);
 	}
 
 	@Override
 	public void deleteBookById(int bookId) {
-		// TODO Auto-generated method stub
-		
+		bookRepository.deleteById(bookId);
 	}
 
 }
