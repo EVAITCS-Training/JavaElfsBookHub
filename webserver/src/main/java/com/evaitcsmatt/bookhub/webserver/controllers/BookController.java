@@ -22,4 +22,8 @@ public class BookController {
 		return "book-menu";
 	}
 	
+	@GetMapping(value = {"/books/search", "/books/search/"})
+	public String getSearchMenu() {
+		return "search";
+	}
 }
