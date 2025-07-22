@@ -2,44 +2,20 @@ package com.evaitcsmatt.bookhub.webserver.dto;
 
 import java.time.LocalDate;
 
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class PostNewBook {
-	private final String title;
-	private final String author;
-	private final String genre;
-	private final LocalDate publishDate;
-	private final byte rating;
-	
-	public PostNewBook(
-			String title, 
-			String author, 
-			String genre, 
-			LocalDate publishDate, 
-			byte rating) {
-		super();
-		this.title = title;
-		this.author = author;
-		this.genre = genre;
-		this.publishDate = publishDate;
-		this.rating = rating;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public String getAuthor() {
-		return author;
-	}
-
-	public String getGenre() {
-		return genre;
-	}
-
-	public LocalDate getPublishDate() {
-		return publishDate;
-	}
-
-	public byte getRating() {
-		return rating;
-	}
+	@Size(min = 2, max = 150, message = "Title has to between 2 and 150 characters long!")
+	private String title;
+	@Size(min = 3, max = 300)
+	private String author;
+	private String genre;
+	private LocalDate publishDate;
+	private byte rating;
 }

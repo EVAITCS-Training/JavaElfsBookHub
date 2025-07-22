@@ -1,0 +1,430 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Book - BookHub</title>
+    <link rel="stylesheet" th:href="@{/css/global-style.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/form-style.css}">
+</head>
+<body>
+    <div th:replace="layout :: navbar"></div>
+    
+    <main class="content">
+        <!-- Form Hero Section -->
+        <section class="form-hero">
+            <div class="container">
+                <div class="form-hero-content">
+                    <h1 class="form-title">Add a New Book</h1>
+                    <p class="form-subtitle">Share your latest read with the BookHub community</p>
+                    <div class="progress-indicator">
+                        <div class="progress-step active">
+                            <span class="step-number">1</span>
+                            <span class="step-label">Book Details</span>
+                        </div>
+                        <div class="progress-line"></div>
+                        <div class="progress-step">
+                            <span class="step-number">2</span>
+                            <span class="step-label">Review</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Form Section -->
+        <section class="form-section">
+            <div class="container">
+                <div class="form-container">
+                    <!-- Form Card -->
+                    <div class="form-card">
+                        <div class="form-header">
+                            <h2 class="form-card-title">Book Information</h2>
+                            <p class="form-card-subtitle">Please fill in the details about the book you'd like to add</p>
+                        </div>
+
+                        <form class="book-form" id="addBookForm" th:action="@{/books/add}" th:object="${newBook}" method="post">
+                            <!-- Title Field -->
+                            <div class="form-group">
+                                <label for="title" class="form-label">
+                                    <span class="label-text">Book Title</span>
+                                    <span class="label-required">*</span>
+                                </label>
+                                <div class="input-wrapper">
+                                    <span class="input-icon">📖</span>
+                                    <input 
+                                        type="text" 
+                                        id="title" 
+                                        name="title" 
+                                        class="form-input"
+                                        placeholder="Enter the book title (e.g., The Great Gatsby)"
+                                        required
+                                        autocomplete="off"
+                                        th:field="${newBook.title}"
+                                    >
+                                    <div class="input-feedback">
+                                        <span class="feedback-icon">✓</span>
+                                        <span class="feedback-text">Looks good!</span>
+                                    </div>
+                                </div>
+                                <small class="form-hint">Enter the full title as it appears on the book cover</small>
+                            </div>
+
+                            <!-- Author Field -->
+                            <div class="form-group">
+                                <label for="author" class="form-label">
+                                    <span class="label-text">Author</span>
+                                    <span class="label-required">*</span>
+                                </label>
+                                <div class="input-wrapper">
+                                    <span class="input-icon">✍️</span>
+                                    <input 
+                                        type="text" 
+                                        id="author" 
+                                        name="author" 
+                                        class="form-input"
+                                        placeholder="Enter author name (e.g., F. Scott Fitzgerald)"
+                                        required
+                                        autocomplete="off"
+                                        th:field="${newBook.author}"
+                                    >
+                                    <div class="input-feedback">
+                                        <span class="feedback-icon">✓</span>
+                                        <span class="feedback-text">Perfect!</span>
+                                    </div>
+                                </div>
+                                <small class="form-hint">Use the format: First Name Last Name</small>
+                            </div>
+
+                            <!-- Genre Field -->
+                            <div class="form-group">
+                                <label for="genre" class="form-label">
+                                    <span class="label-text">Genre</span>
+                                    <span class="label-required">*</span>
+                                </label>
+                                <div class="input-wrapper">
+                                    <span class="input-icon">🏷️</span>
+                                    <select id="genre" name="genre" class="form-select" required th:field="${newBook.genre}">
+                                        <option value="">Select a genre</option>
+                                        <option value="Fiction">Fiction</option>
+                                        <option value="Non-Fiction">Non-Fiction</option>
+                                        <option value="Mystery">Mystery & Thriller</option>
+                                        <option value="Romance">Romance</option>
+                                        <option value="Science Fiction">Science Fiction</option>
+                                        <option value="Fantasy">Fantasy</option>
+                                        <option value="Biography">Biography</option>
+                                        <option value="History">History</option>
+                                        <option value="Self-Help">Self-Help</option>
+                                        <option value="Business">Business</option>
+                                        <option value="Psychology">Psychology</option>
+                                        <option value="Philosophy">Philosophy</option>
+                                        <option value="Poetry">Poetry</option>
+                                        <option value="Drama">Drama</option>
+                                        <option value="Horror">Horror</option>
+                                        <option value="Adventure">Adventure</option>
+                                        <option value="Children">Children's Books</option>
+                                        <option value="Young Adult">Young Adult</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                    <div class="select-arrow">▼</div>
+                                    <div class="input-feedback">
+                                        <span class="feedback-icon">✓</span>
+                                        <span class="feedback-text">Great choice!</span>
+                                    </div>
+                                </div>
+                                <small class="form-hint">Choose the primary genre that best describes this book</small>
+                            </div>
+
+                            <!-- Custom Genre Input (hidden by default) -->
+                            <div class="form-group" id="customGenreGroup" style="display: none;">
+                                <label for="customGenre" class="form-label">
+                                    <span class="label-text">Custom Genre</span>
+                                    <span class="label-required">*</span>
+                                </label>
+                                <div class="input-wrapper">
+                                    <span class="input-icon">✏️</span>
+                                    <input 
+                                        type="text" 
+                                        id="customGenre" 
+                                        name="customGenre" 
+                                        class="form-input"
+                                        placeholder="Enter custom genre"
+                                        autocomplete="off"
+                                    >
+                                </div>
+                            </div>
+
+                            <!-- Publication Date Field -->
+                            <div class="form-group">
+                                <label for="publishDate" class="form-label">
+                                    <span class="label-text">Publication Date</span>
+                                    <span class="label-required">*</span>
+                                </label>
+                                <div class="input-wrapper">
+                                    <span class="input-icon">📅</span>
+                                    <input 
+                                        type="date" 
+                                        id="publishDate" 
+                                        name="publishDate" 
+                                        class="form-input date-input"
+                                        required
+                                        max="2025-12-31"
+                                        min="1000-01-01"
+                                        th:field="${newBook.publishDate}"
+                                    >
+                                    <div class="input-feedback">
+                                        <span class="feedback-icon">✓</span>
+                                        <span class="feedback-text">Date confirmed!</span>
+                                    </div>
+                                </div>
+                                <small class="form-hint">Select the original publication date of the book</small>
+                            </div>
+
+                            <!-- Rating Field -->
+                            <div class="form-group">
+                                <label for="rating" class="form-label">
+                                    <span class="label-text">Your Rating</span>
+                                    <span class="label-required">*</span>
+                                </label>
+                                <div class="rating-wrapper">
+                                    <!-- Star Rating Display -->
+                                    <div class="star-rating-input">
+                                        <input type="radio" id="star5" name="rating" value="5" class="star-input" th:field="${newBook.rating}">
+                                        <label for="star5" class="star-label" title="5 stars - Excellent">★</label>
+                                        
+                                        <input type="radio" id="star4" name="rating" value="4" class="star-input" th:field="${newBook.rating}">
+                                        <label for="star4" class="star-label" title="4 stars - Very Good">★</label>
+                                        
+                                        <input type="radio" id="star3" name="rating" value="3" class="star-input" th:field="${newBook.rating}">
+                                        <label for="star3" class="star-label" title="3 stars - Good">★</label>
+                                        
+                                        <input type="radio" id="star2" name="rating" value="2" class="star-input" th:field="${newBook.rating}">
+                                        <label for="star2" class="star-label" title="2 stars - Fair">★</label>
+                                        
+                                        <input type="radio" id="star1" name="rating" value="1" class="star-input" th:field="${newBook.rating}">
+                                        <label for="star1" class="star-label" title="1 star - Poor">★</label>
+                                    </div>
+                                    
+                                    <!-- Rating Description -->
+                                    <div class="rating-description">
+                                        <span class="rating-text">Select your rating</span>
+                                        <div class="rating-scale">
+                                            <span class="scale-item">1 = Poor</span>
+                                            <span class="scale-item">2 = Fair</span>
+                                            <span class="scale-item">3 = Good</span>
+                                            <span class="scale-item">4 = Very Good</span>
+                                            <span class="scale-item">5 = Excellent</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <small class="form-hint">Rate this book based on your personal reading experience</small>
+                            </div>
+
+                            <!-- Form Actions -->
+                            <div class="form-actions">
+                                <div class="action-buttons">
+                                    <button type="button" class="btn btn-secondary" onclick="history.back()">
+                                        <span class="btn-icon">←</span>
+                                        <span class="btn-text">Cancel</span>
+                                    </button>
+                                    <button type="button" class="btn btn-outline">
+                                        <span class="btn-icon">👁️</span>
+                                        <span class="btn-text">Preview</span>
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">
+                                        <span class="btn-text">Add Book</span>
+                                        <span class="btn-icon">✓</span>
+                                    </button>
+                                </div>
+                                <div class="form-footer-note">
+                                    <span class="note-icon">🔒</span>
+                                    <span class="note-text">Your book information is secure and will be added to your personal library</span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Help Sidebar -->
+                    <div class="help-sidebar">
+                        <div class="help-card">
+                            <h3 class="help-title">
+                                <span class="help-icon">💡</span>
+                                Tips for Adding Books
+                            </h3>
+                            <ul class="help-list">
+                                <li>
+                                    <strong>Title:</strong> Use the exact title from the book cover for best results
+                                </li>
+                                <li>
+                                    <strong>Author:</strong> Include full author name as it appears on the book
+                                </li>
+                                <li>
+                                    <strong>Genre:</strong> Choose the most appropriate primary genre
+                                </li>
+                                <li>
+                                    <strong>Date:</strong> Use the original publication date, not reprint dates
+                                </li>
+                                <li>
+                                    <strong>Rating:</strong> Rate based on your personal enjoyment
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="help-card">
+                            <h3 class="help-title">
+                                <span class="help-icon">📚</span>
+                                Recently Added
+                            </h3>
+                            <div class="recent-books">
+                                <div class="recent-book-item">
+                                    <div class="book-cover">📖</div>
+                                    <div class="book-info">
+                                        <span class="book-title">Dune</span>
+                                        <span class="book-author">Frank Herbert</span>
+                                        <div class="book-rating">
+                                            <span class="stars">★★★★★</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="recent-book-item">
+                                    <div class="book-cover">📘</div>
+                                    <div class="book-info">
+                                        <span class="book-title">1984</span>
+                                        <span class="book-author">George Orwell</span>
+                                        <div class="book-rating">
+                                            <span class="stars">★★★★☆</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="recent-book-item">
+                                    <div class="book-cover">📗</div>
+                                    <div class="book-info">
+                                        <span class="book-title">The Hobbit</span>
+                                        <span class="book-author">J.R.R. Tolkien</span>
+                                        <div class="book-rating">
+                                            <span class="stars">★★★★★</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="help-card">
+                            <h3 class="help-title">
+                                <span class="help-icon">❓</span>
+                                Need Help?
+                            </h3>
+                            <p class="help-text">
+                                Can't find your book in our database? 
+                                <a href="/help/add-book" class="help-link">Learn how to add new books</a> 
+                                or <a href="/contact" class="help-link">contact our support team</a>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <div th:replace="layout :: footer"></div>
+
+    <script>
+        // Form enhancement JavaScript (no actual submission logic)
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('addBookForm');
+            const inputs = form.querySelectorAll('.form-input, .form-select');
+            const genreSelect = document.getElementById('genre');
+            const customGenreGroup = document.getElementById('customGenreGroup');
+            
+            // Input validation styling
+            inputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    validateInput(this);
+                });
+                
+                input.addEventListener('blur', function() {
+                    validateInput(this);
+                });
+            });
+            
+            function validateInput(input) {
+                const value = input.value.trim();
+                
+                if (input.hasAttribute('required') && !value) {
+                    input.classList.remove('valid');
+                    input.classList.add('invalid');
+                } else if (value) {
+                    input.classList.remove('invalid');
+                    input.classList.add('valid');
+                } else {
+                    input.classList.remove('valid', 'invalid');
+                }
+            }
+            
+            // Custom genre handling
+            genreSelect.addEventListener('change', function() {
+                if (this.value === 'Other') {
+                    customGenreGroup.style.display = 'block';
+                    document.getElementById('customGenre').setAttribute('required', 'required');
+                } else {
+                    customGenreGroup.style.display = 'none';
+                    document.getElementById('customGenre').removeAttribute('required');
+                }
+                validateInput(this);
+            });
+            
+            // Star rating interaction
+            const starInputs = document.querySelectorAll('.star-input');
+            const ratingText = document.querySelector('.rating-text');
+            
+            starInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    const rating = this.value;
+                    const descriptions = {
+                        '1': 'Poor - Didn\'t enjoy this book',
+                        '2': 'Fair - Had some issues but readable',
+                        '3': 'Good - Enjoyed reading this',
+                        '4': 'Very Good - Really liked this book',
+                        '5': 'Excellent - Absolutely loved it!'
+                    };
+                    ratingText.textContent = descriptions[rating] || 'Select your rating';
+                });
+            });
+            
+            // Form preview functionality
+            const previewBtn = document.querySelector('.btn-outline');
+            previewBtn.addEventListener('click', function() {
+                showFormPreview();
+            });
+            
+            function showFormPreview() {
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData);
+                
+                // Simple preview modal (you can enhance this)
+                alert(`Preview:\nTitle: ${data.title}\nAuthor: ${data.author}\nGenre: ${data.genre}\nDate: ${data.publishDate}\nRating: ${data.rating} stars`);
+            }
+            
+            // Clear form button (optional)
+            const clearBtn = document.createElement('button');
+            clearBtn.type = 'button';
+            clearBtn.className = 'btn btn-secondary';
+            clearBtn.innerHTML = '<span class="btn-icon">🗑️</span><span class="btn-text">Clear Form</span>';
+            clearBtn.addEventListener('click', function() {
+                if (confirm('Are you sure you want to clear all form data?')) {
+                    form.reset();
+                    inputs.forEach(input => {
+                        input.classList.remove('valid', 'invalid');
+                    });
+                    ratingText.textContent = 'Select your rating';
+                }
+            });
+            
+            // Add clear button to actions (optional)
+            // document.querySelector('.action-buttons').insertBefore(clearBtn, document.querySelector('.btn-outline'));
+        });
+    </script>
+</body>
+</html>
