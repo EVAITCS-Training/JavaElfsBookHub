@@ -161,7 +161,7 @@
                     </div>
                 </div>
     	<section class="search-results">
-            <div class="container" id="search-results-container">
+            <div class="container">
                 <!-- Search Status -->
                 <div class="search-status">
                     <div class="status-left">
@@ -192,7 +192,7 @@
                 </div>
 
                 <!-- Results Grid/List -->
-                <div class="results-container">
+                <div class="results-container"  id="search-results-container">
                     <!-- Placeholder for search results -->
                     <div class="empty-state">
                         <div class="empty-icon">📚</div>
@@ -223,6 +223,7 @@
     </main>
     
     <div th:replace="layout :: footer"></div>
+   
     <script>
         // Simple tab switching functionality (no search logic)
         document.addEventListener('DOMContentLoaded', function() {
@@ -246,18 +247,6 @@
                     });
                 });
             });
-            
-            // Advanced search toggle
-            const advancedToggle = document.querySelector('.advanced-toggle-btn');
-            const advancedPanel = document.querySelector('.advanced-search-panel');
-            
-            if (advancedToggle && advancedPanel) {
-                advancedToggle.addEventListener('click', () => {
-                    advancedToggle.classList.toggle('active');
-                    advancedPanel.classList.toggle('active');
-                });
-            }
-            
             // Clear input functionality
             const inputs = document.querySelectorAll('.search-input');
             inputs.forEach(input => {
@@ -286,5 +275,6 @@
             });
         });
     </script>
+    <script type="text/javascript" th:src="@{/js/search.js}"></script>
 </body>
 </html>
