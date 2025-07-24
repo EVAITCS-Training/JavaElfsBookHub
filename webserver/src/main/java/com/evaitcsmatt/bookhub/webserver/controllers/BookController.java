@@ -55,4 +55,16 @@ public class BookController {
 		bookServiceFactory.getBookService(null).createBook(book);
 		return "redirect:/books/";
 	}
+	
+	@GetMapping("/books/update/{id}/rating/{rating}")
+	public String updateRating(@PathVariable int id, @PathVariable byte rating) {
+		bookServiceFactory.getBookService(null).updateRating(id, rating);
+		return "redirect:/books/";
+	}
+	
+	@GetMapping("/books/delete/{id}")
+	public String deleteBook(@PathVariable int id) {
+		bookServiceFactory.getBookService(null).deleteBookById(id);
+		return "redirect:/books/";
+	}
 }

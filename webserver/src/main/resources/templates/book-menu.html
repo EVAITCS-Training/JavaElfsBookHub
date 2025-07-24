@@ -25,6 +25,9 @@
 	    			<th>
 	    				Rating
 	    			</th>
+	    			<th>
+	    				Actions
+	    			</th>
 	   			</tr>
     		</thead>
     		<tbody>
@@ -33,16 +36,22 @@
     				<td th:text="${book.author}">Author</td>
     				<td th:text="${book.genre}">Genre</td>
     				<td class="rating-cell">
-	                    <!-- Read-only Average Rating -->
-	                    <div class="star-rating readonly">
-	                        <span th:each="star : ${#numbers.sequence(1, 5)}" 
-	                              class="star"
-	                              th:classappend="${star <= book.rating} ? 'gold-star' : 'empty-star'">★</span>
-	                        <span class="rating-text" th:if="${book.rating > 0}">
-	                            (<span th:text="${#numbers.formatDecimal(book.rating, 1, 1)}">0.0</span>/5)
-	                        </span>
-	                    </div>
-	                </td>
+					    <div class="star-rating">
+					        <span th:each="star : ${#numbers.sequence(1, 5)}"
+					              class="star clickable"
+					              th:classappend="${star <= book.rating} ? 'gold-star' : 'empty-star'"
+					              th:onclick="'location.href=\'/books/update/' + ${book.id} + '/rating/' + ${star} + '\''">★</span>
+					        
+					        <span class="rating-text" th:if="${book.rating > 0}">
+					            (<span th:text="${#numbers.formatDecimal(book.rating, 1, 1)}">0.0</span>/5)
+					        </span>
+					    </div>
+					</td>
+					<td>
+						<button th:onclick="'location.href=\'/books/delete/' + ${book.id} +'\''">
+							Delete
+						</button>
+					</td>
     			</tr>
     		</tbody>
     	</table>
