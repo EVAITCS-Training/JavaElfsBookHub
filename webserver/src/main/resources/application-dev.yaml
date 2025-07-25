@@ -7,4 +7,12 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: update #create create-drop update none
+      ddl-auto: update #create create-drop update none	
+logging:
+  level:
+    org.springframework: INFO
+    org.hibernate: INFO
+    com.evaitcsmatt.bookhub.webserver: DEBUG  # Your package name
+    org.springframework.web: DEBUG  # For web request logging
+    org.springframework.security: DEBUG  # For security debugging
+    org.springframework.transaction: DEBUG  # For transaction debugging

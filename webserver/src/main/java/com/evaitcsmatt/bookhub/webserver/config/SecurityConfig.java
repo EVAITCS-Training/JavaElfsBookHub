@@ -20,23 +20,27 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity)throws Exception{
         httpSecurity
+        		.cors(cor -> cor.disable())
+        		.csrf(cs -> cs.disable())
                 .authorizeHttpRequests(http ->http
-                        .requestMatchers(
-                        		"/",
-                        		"/books",
-                        		"/register",
-                        		"/books/",
-                        		"/books/add",
-                        		"/books/add/", 
-                        		"/css/**", 
-                        		"/js/**", 
-                        		"/images/**")
-                        .permitAll()
-                        .anyRequest()
-                        .authenticated())
-                		.formLogin(form -> form
-                        .defaultSuccessUrl("/books", true)
-                        .permitAll())
+//                        .requestMatchers(
+//                        		"/",
+//                        		"/books",
+//                        		"/register",
+//                        		"/books/",
+//                        		"/books/add",
+//                        		"/books/add/", 
+//                        		"/css/**", 
+//                        		"/js/**", 
+//                        		"/images/**")
+//                        .permitAll()
+//                        .anyRequest()
+//                        .authenticated()
+                		.anyRequest().permitAll()
+                        )
+//                		.formLogin(form -> form
+//                        .defaultSuccessUrl("/books", true)
+//                        .permitAll())
                 .authenticationProvider(authenticationProvider);
         return httpSecurity.build();
     }
