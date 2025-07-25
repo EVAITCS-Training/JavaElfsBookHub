@@ -21,14 +21,13 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity)throws Exception{
         httpSecurity
                 .authorizeHttpRequests(http ->http
-                        .requestMatchers("/css/**", "/js/**", "/images/**")
-                        .permitAll()
-                        .requestMatchers(HttpMethod.GET,"/","books","/books/","/books/add","/books/add/")
-                        .permitAll()
-                        .requestMatchers(HttpMethod.POST, "/books/add","/books/add/")
+                        .requestMatchers("/","/books","/books/","/books/add","/books/add/", "/css/**", "/js/**", "/images/**")
                         .permitAll()
                         .anyRequest()
                         .authenticated())
+                		.formLogin(form -> form
+                        .defaultSuccessUrl("/books", true)
+                        .permitAll())
                 .authenticationProvider(authenticationProvider);
         return httpSecurity.build();
     }

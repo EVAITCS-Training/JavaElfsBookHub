@@ -28,4 +28,18 @@ public class GlobalExceptionHandler {
 				);
 		return new ResponseEntity<ErrorMessage>(errorMessage, HttpStatus.NOT_FOUND);
 	}
+
+	@ExceptionHandler(Exception.class)
+	public String globalExceptionHandler(
+			HttpServletRequest request,
+			HttpServletResponse response,
+			Exception exception
+			) {
+		request.setAttribute("errorMessage", exception.getMessage());
+		request.setAttribute("requestUri", request.getRequestURI());
+		request.setAttribute("statusCode", HttpStatus.INTERNAL_SERVER_ERROR.value());
+		request.setAttribute("timestamp", LocalDateTime.now());
+		response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+		return "error";
+	}
 }
