@@ -21,7 +21,16 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity)throws Exception{
         httpSecurity
                 .authorizeHttpRequests(http ->http
-                        .requestMatchers("/","/books","/books/","/books/add","/books/add/", "/css/**", "/js/**", "/images/**")
+                        .requestMatchers(
+                        		"/",
+                        		"/books",
+                        		"/register",
+                        		"/books/",
+                        		"/books/add",
+                        		"/books/add/", 
+                        		"/css/**", 
+                        		"/js/**", 
+                        		"/images/**")
                         .permitAll()
                         .anyRequest()
                         .authenticated())

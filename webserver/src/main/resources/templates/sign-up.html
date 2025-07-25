@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join BookHub - Create Your Account</title>
+    <link rel="stylesheet" th:href="@{/css/global-style.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/auth-style.css}">
+</head>
+<body>
+    <div th:replace="layout :: navbar"></div>
+    
+    <main class="content">
+        <!-- Sign-Up Hero Section -->
+        <section class="auth-hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">Join BookHub</h1>
+                    <p class="hero-subtitle">Start tracking your reading journey today</p>
+                    <div class="hero-visual">
+                        <div class="book-icon">📚</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sign-Up Form Section -->
+        <section class="auth-section">
+            <div class="container">
+                <div class="auth-wrapper">
+                    <div class="auth-card">
+                        <div class="auth-header">
+                            <h2 class="auth-title">Create Your Account</h2>
+                            <p class="auth-subtitle">Enter your email and password to get started</p>
+                        </div>
+
+                        <!-- Sign-Up Form -->
+                        <form class="auth-form" id="signUpForm" th:action="@{/register}" th:object="${newUser}" method="post">
+                            <!-- Email Field -->
+                            <div class="form-group">
+                                <label for="email" class="form-label">
+                                    <span class="label-text">Email Address</span>
+                                    <span class="label-required">*</span>
+                                </label>
+                                <div class="input-wrapper">
+                                    <span class="input-icon">📧</span>
+                                    <input 
+                                        type="email" 
+                                        id="email" 
+                                        name="email" 
+                                        class="form-input"
+                                        placeholder="Enter your email address"
+                                        required
+                                        autocomplete="email"
+                                    >
+                                    <div class="input-feedback">
+                                        <span class="feedback-icon">✓</span>
+                                    </div>
+                                </div>
+                                <small class="form-hint">We'll use this to send you login information</small>
+                            </div>
+
+                            <!-- Password Field -->
+                            <div class="form-group">
+                                <label for="password" class="form-label">
+                                    <span class="label-text">Password</span>
+                                    <span class="label-required">*</span>
+                                </label>
+                                <div class="input-wrapper">
+                                    <span class="input-icon">🔒</span>
+                                    <input 
+                                        type="password" 
+                                        id="password" 
+                                        name="password" 
+                                        class="form-input"
+                                        placeholder="Create a password"
+                                        required
+                                        autocomplete="new-password"
+                                        minlength="6"
+                                    >
+                                    <button type="button" class="password-toggle" data-target="password">
+                                        <span class="toggle-icon">👁️</span>
+                                    </button>
+                                    <div class="input-feedback">
+                                        <span class="feedback-icon">✓</span>
+                                    </div>
+                                </div>
+                                <small class="form-hint">At least 6 characters</small>
+                            </div>
+
+                            <!-- Confirm Password Field -->
+                            <div class="form-group">
+                                <label for="confirmPassword" class="form-label">
+                                    <span class="label-text">Confirm Password</span>
+                                    <span class="label-required">*</span>
+                                </label>
+                                <div class="input-wrapper">
+                                    <span class="input-icon">🔐</span>
+                                    <input 
+                                        type="password" 
+                                        id="confirmPassword" 
+                                        name="confirmPassword" 
+                                        class="form-input"
+                                        placeholder="Confirm your password"
+                                        required
+                                        autocomplete="new-password"
+                                    >
+                                    <button type="button" class="password-toggle" data-target="confirmPassword">
+                                        <span class="toggle-icon">👁️</span>
+                                    </button>
+                                    <div class="input-feedback">
+                                        <span class="feedback-icon">✓</span>
+                                    </div>
+                                </div>
+                                <small class="form-hint match-hint">Passwords must match</small>
+                            </div>
+
+                            <!-- Terms Acceptance -->
+                            <div class="form-group">
+                                <label class="checkbox-wrapper">
+                                    <input type="checkbox" id="terms" name="terms" required class="checkbox-input">
+                                    <span class="checkbox-mark"></span>
+                                    <span class="checkbox-text">
+                                        I agree to the <a href="/terms" target="_blank" class="link">Terms of Service</a> 
+                                        and <a href="/privacy" target="_blank" class="link">Privacy Policy</a>
+                                    </span>
+                                </label>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary btn-large">
+                                    <span class="btn-text">Create Account</span>
+                                    <span class="btn-icon">→</span>
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- Sign-In Link -->
+                        <div class="auth-footer">
+                            <p class="auth-switch">
+                                Already have an account? 
+                                <a href="/auth/login" class="auth-link">Sign in here</a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Simple Benefits -->
+                    <div class="benefits-card">
+                        <h3 class="benefits-title">
+                            <span class="benefits-icon">📚</span>
+                            Welcome to BookHub
+                        </h3>
+                        <ul class="benefits-list">
+                            <li>📖 Track all your books in one place</li>
+                            <li>⭐ Rate and review your reads</li>
+                            <li>📊 See your reading progress</li>
+                            <li>🎯 Set and achieve reading goals</li>
+                        </ul>
+                        <div class="community-stats">
+                            <div class="stat">
+                                <span class="stat-number">2,500+</span>
+                                <span class="stat-label">Happy Readers</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">10,000+</span>
+                                <span class="stat-label">Books Tracked</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <div th:replace="layout :: footer"></div>
+    <script>
+        // Simple form validation (no submission logic)
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('signUpForm');
+            const inputs = form.querySelectorAll('.form-input');
+            const passwordInput = document.getElementById('password');
+            const confirmPasswordInput = document.getElementById('confirmPassword');
+            
+            // Input validation
+            inputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    validateInput(this);
+                });
+                
+                input.addEventListener('blur', function() {
+                    validateInput(this);
+                });
+            });
+            
+            function validateInput(input) {
+                const value = input.value.trim();
+                let isValid = true;
+                
+                if (input.hasAttribute('required') && !value) {
+                    isValid = false;
+                } else if (input.type === 'email' && value && !isValidEmail(value)) {
+                    isValid = false;
+                } else if (input.name === 'password' && value && value.length < 6) {
+                    isValid = false;
+                } else if (input.name === 'confirmPassword' && value && value !== passwordInput.value) {
+                    isValid = false;
+                }
+                
+                input.classList.toggle('valid', isValid && value);
+                input.classList.toggle('invalid', !isValid && value);
+                
+                // Update password match hint
+                if (input.name === 'confirmPassword') {
+                    const hint = input.parentElement.parentElement.querySelector('.match-hint');
+                    hint.classList.toggle('valid', isValid && value);
+                    hint.classList.toggle('invalid', !isValid && value);
+                }
+            }
+            
+            function isValidEmail(email) {
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            }
+            
+            // Password toggle functionality
+            document.querySelectorAll('.password-toggle').forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-target');
+                    const input = document.getElementById(targetId);
+                    const icon = this.querySelector('.toggle-icon');
+                    
+                    if (input.type === 'password') {
+                        input.type = 'text';
+                        icon.textContent = '🙈';
+                    } else {
+                        input.type = 'password';
+                        icon.textContent = '👁️';
+                    }
+                });
+            });
+            
+            // Confirm password validation
+            confirmPasswordInput.addEventListener('input', function() {
+                validateInput(this);
+            });
+            
+            passwordInput.addEventListener('input', function() {
+                if (confirmPasswordInput.value) {
+                    validateInput(confirmPasswordInput);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
