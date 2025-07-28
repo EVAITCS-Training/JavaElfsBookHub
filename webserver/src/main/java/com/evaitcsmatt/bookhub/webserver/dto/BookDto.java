@@ -1,6 +1,11 @@
 package com.evaitcsmatt.bookhub.webserver.dto;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
 //Customers DTO
+@EqualsAndHashCode
+@ToString
 public class BookDto {
 	private final int id;
 	private final String title;
