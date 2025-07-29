@@ -16,3 +16,5 @@ logging:
     org.springframework.web: DEBUG  # For web request logging
     org.springframework.security: DEBUG  # For security debugging
     org.springframework.transaction: DEBUG  # For transaction debugging
+jwt:
+	secret: JLidcJbhdHal98ce2hVC7w8HEd4Cx//khkGRKlb3Gro=
