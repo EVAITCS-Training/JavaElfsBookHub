@@ -30,16 +30,17 @@ public class GlobalExceptionHandler {
 	}
 
 	@ExceptionHandler(Exception.class)
-	public String globalExceptionHandler(
+	public ResponseEntity<ErrorMessage> globalExceptionHandler(
 			HttpServletRequest request,
 			HttpServletResponse response,
 			Exception exception
 			) {
-		request.setAttribute("errorMessage", exception.getMessage());
-		request.setAttribute("requestUri", request.getRequestURI());
-		request.setAttribute("statusCode", HttpStatus.INTERNAL_SERVER_ERROR.value());
-		request.setAttribute("timestamp", LocalDateTime.now());
-		response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-		return "error";
+		ErrorMessage errorMessage = new ErrorMessage(
+				exception.getMessage(),
+				request.getRequestURI(),
+				HttpStatus.INTERNAL_SERVER_ERROR.value(),
+				LocalDateTime.now()
+				);
+		return new ResponseEntity<ErrorMessage>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }

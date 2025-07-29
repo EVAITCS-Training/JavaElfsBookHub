@@ -1,0 +1,8 @@
+package com.evaitcsmatt.bookhub.webserver.dto;
+
+public record AuthRequest(
+		String username,
+		String password
+		) {
+
+}

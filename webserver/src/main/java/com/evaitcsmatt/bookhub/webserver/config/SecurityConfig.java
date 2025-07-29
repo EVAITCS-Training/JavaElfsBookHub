@@ -8,7 +8,9 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -16,6 +18,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig {
     @Autowired
     private AuthenticationProvider authenticationProvider;
+    
+    @Autowired
+    private JwtAuthFilter authFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity)throws Exception{
@@ -23,25 +28,21 @@ public class SecurityConfig {
         		.cors(cor -> cor.disable())
         		.csrf(cs -> cs.disable())
                 .authorizeHttpRequests(http ->http
-//                        .requestMatchers(
-//                        		"/",
-//                        		"/books",
-//                        		"/register",
-//                        		"/books/",
-//                        		"/books/add",
-//                        		"/books/add/", 
-//                        		"/css/**", 
-//                        		"/js/**", 
-//                        		"/images/**")
-//                        .permitAll()
-//                        .anyRequest()
-//                        .authenticated()
-                		.anyRequest().permitAll()
+                        .requestMatchers(
+                        		"/api/v1/book",
+                        		"/api/v1/auth/register",
+                        		"/api/v1/book/",
+                        		"/api/v1/book/add",
+                        		"/api/v1/book/add/",
+                        		"/api/v1/auth/login"
+                        		)
+                        .permitAll()
+                        .anyRequest()
+                        .authenticated()
                         )
-//                		.formLogin(form -> form
-//                        .defaultSuccessUrl("/books", true)
-//                        .permitAll())
-                .authenticationProvider(authenticationProvider);
+                .sessionManagement(ses -> ses.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
     }
 }
