@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import PostRow from './PostRow';
 
 export default function PostIndex() {
     const [posts, setPosts] = useState([]);
@@ -30,7 +31,9 @@ export default function PostIndex() {
                 </tr>
             </thead>
             <tbody>
-
+                {posts.map(post => {
+                    return <PostRow post={post} key={post.id}/>
+                })}
             </tbody>
         </table>
     </div>
