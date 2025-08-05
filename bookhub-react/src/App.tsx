@@ -19,7 +19,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage/>} />
         <Route path="/books" element={<BookIndex/>} />
-        <Route path="/add-book" element={<AddBook />} />
+        <Route path="/add-book" element={<AddBook onNavigate={onNavigate}/>} />
       </Routes>
       <Footer />
     </>
