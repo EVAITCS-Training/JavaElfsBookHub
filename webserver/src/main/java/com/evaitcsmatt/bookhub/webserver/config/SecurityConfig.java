@@ -1,5 +1,7 @@
 package com.evaitcsmatt.bookhub.webserver.config;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +14,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -25,7 +29,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity)throws Exception{
         httpSecurity
-        		.cors(cor -> cor.disable())
+        		.cors(cor -> cor.configurationSource(corConfig()))
         		.csrf(cs -> cs.disable())
                 .authorizeHttpRequests(http ->http
                         .requestMatchers(
@@ -45,5 +49,17 @@ public class SecurityConfig {
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
+    }
+    
+    @Bean
+    protected UrlBasedCorsConfigurationSource corConfig() {
+    	UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    	CorsConfiguration configuration = new CorsConfiguration();
+    	configuration.setAllowCredentials(false);
+    	configuration.addAllowedOrigin("http://localhost:5173");
+    	configuration.addAllowedHeader("*");
+    	configuration.addAllowedMethod("*");
+    	source.registerCorsConfiguration("/**", configuration);
+    	return source;
     }
 }
