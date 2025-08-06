@@ -70,7 +70,8 @@ export default function AddBook({ onNavigate }: AddBookProps) {
         mutationFn: async (data: BookFormData) => {
             const request = await axios.post(import.meta.env.VITE_API_URL + "/book/add", data, {
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization" : "Bearer " + sessionStorage.getItem("Authorization")
                 }
             })
             return request.data

@@ -4,6 +4,8 @@ import Navbar from "./static/Navbar"
 import { LandingPage } from "./static/LandingPage"
 import BookIndex from "./components/BookIndex"
 import AddBook from "./components/AddBook"
+import Register from "./components/Register"
+import Login from "./components/Login"
 
 
 function App() {
@@ -20,6 +22,8 @@ function App() {
         <Route path="/" element={<LandingPage/>} />
         <Route path="/books" element={<BookIndex/>} />
         <Route path="/add-book" element={<AddBook onNavigate={onNavigate}/>} />
+        <Route path="/register" element={<Register onNavigate={onNavigate} />} />
+        <Route path="/login" element={<Login onNavigate={onNavigate} />} />
       </Routes>
       <Footer />
     </>
