@@ -39,11 +39,22 @@ public class SecurityConfig {
                         		"/api/v1/book/add",
                         		"/api/v1/book/add/",
                         		"/api/v1/auth/login",
-                                "/actuator/**"
+                                "/actuator/**",
+                                "/",
+                                "/static/**",
+                                "/assets/**",
+                                "/favicon.ico",
+                                "index.html",
+                                "/books",
+                                "/add-book",
+                                "/register",
+                                "/login"
                         		)
                         .permitAll()
-                        .anyRequest()
+                        .requestMatchers("/api/v1/**")
                         .authenticated()
+                        .anyRequest()
+                        .permitAll()
                         )
                 .sessionManagement(ses -> ses.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)

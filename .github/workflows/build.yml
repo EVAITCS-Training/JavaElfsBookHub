@@ -10,6 +10,30 @@ jobs:
         steps:
             - name: Checkout code
               uses: actions/checkout@v3
+            - name: Setup Node.js 18
+              uses: actions/setup-node@v3
+              with:
+                node-version: '18'
+                cache: 'npm'
+                cache-dependency-path: bookhub-react/package-lock.json
+            - name: Build React Frontend
+              working-directory: bookhub-react
+              env:
+                VITE_API_URL: ${{ secrets.VITE_API_URL }}
+              run: |
+                echo "Installing React Depends"
+                npm ci
+                echo "Building React app..."
+                npm run build
+                echo "React build completed"
+            - name: Copy React build to Spring Boot static resources
+              run: |
+                echo "Preparing static resources directory"
+                mkdir -p webserver/src/main/resources/static
+                rm -rf webserver/src/main/resources/static/*
+                echo "Copying React build files..."
+                cp -r bookhub-react/dist/* webserver/src/main/resources/static/
+                echo "React file copied to spring boot static resources!"
             - name: Setup Java 21
               uses: actions/setup-java@v3
               with:
