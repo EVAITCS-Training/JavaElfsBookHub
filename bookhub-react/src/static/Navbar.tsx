@@ -1,3 +1,5 @@
+// bookhub-react/src/static/Navbar.tsx
+import React from 'react';
 import {
     AppBar,
     Box,
@@ -16,19 +18,20 @@ import {
 } from '@mui/icons-material';
 
 interface NavbarProps {
-    user?: {email: string} | "Anonymous User"
-    onNavigate?: (path:string) => void;
-    onLogout?: () => void
+    user?: any;
+    onNavigate?: (path: string) => void;
+    onLogout?: () => void;
 }
 
-function Navbar({
+const Navbar: React.FC<NavbarProps> = ({
     user,
-    onNavigate = (path:string) => {},
+    onNavigate = () => {},
     onLogout = () => {}
-}): React.FC<NavbarProps> {
-    const handleClick = (path:string):void => {
+}) => {
+    const handleClick = (path: string): void => {
         onNavigate(path)
     }
+    
     return (
         <AppBar
             position='sticky'

@@ -104,7 +104,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           {/* Stats */}
           <Grid container spacing={4} justifyContent="center" sx={{ mb: 4 }}>
             {stats.map((stat) => (
-              <Grid item key={stat.label}>
+              <Grid key={stat.label}>
                 <Box>
                   <Typography 
                     variant="h3" 
@@ -168,7 +168,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         
         <Grid container spacing={4}>
           {features.map((feature) => (
-            <Grid item xs={12} md={6} lg={4} key={feature.title}>
+            <Grid size={{ xs: 12, md: 6, lg: 4 }} key={feature.title}>
               <Card 
                 sx={{ 
                   height: '100%', 
@@ -211,7 +211,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           
           <Grid container spacing={4}>
             {testimonials.map((testimonial, index) => (
-              <Grid item xs={12} md={4} key={index}>
+              <Grid size={{ xs: 12, md: 4 }} key={index}>
                 <Card sx={{ height: '100%', textAlign: 'center', p: 2 }}>
                   <CardContent>
                     {/* Star Rating */}

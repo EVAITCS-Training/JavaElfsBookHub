@@ -1,3 +1,4 @@
+// bookhub-react/src/components/BookIndex.tsx
 import { ErrorOutline, Refresh, Star, StarBorder } from "@mui/icons-material";
 import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import { DataGrid, type GridColDef } from "@mui/x-data-grid"
@@ -57,12 +58,12 @@ const columns: GridColDef[] = [
 ];
 
 export default function BookIndex() {
-    const {data, isLoading, error, refetch}: typeof useQuery = useQuery({
-        queryKey:['books'],
+    const { data, isLoading, error, refetch } = useQuery({
+        queryKey: ['books'],
         queryFn: async () => {
             const response = await axios.get(import.meta.env.VITE_API_URL + "/book/")
-            if(response.status != 200) {
-                throw new Error("Error retriving books")
+            if(response.status !== 200) {
+                throw new Error("Error retrieving books")
             }
             return response.data
         }
@@ -131,9 +132,8 @@ export default function BookIndex() {
     <>
         <div>Bookhub Library</div>
         <DataGrid
-            rows={data}
+            rows={data || []}
             columns={columns}
-            rowCount={10}
             loading={isLoading}
         />
     </>

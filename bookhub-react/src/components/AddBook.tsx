@@ -66,31 +66,30 @@ export default function AddBook({ onNavigate }: AddBookProps) {
     // Fix: Use proper AlertColor type instead of string
     const [errorLevel, setErrorLevel] = useState<AlertColor>('success');
 
-    const {mutate, isPending, error} = useMutation({
-        mutationFn: async (data: BookFormData) => {
-            const request = await axios.post(import.meta.env.VITE_API_URL + "/book/add", data, {
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization" : "Bearer " + sessionStorage.getItem("Authorization")
-                }
-            })
-            return request.data
-        },
-        onSuccess() {
-            setMessage("Book added successfully!")
-            setErrorLevel('success')
-            setSnackBar(true);
-            queryClient.invalidateQueries();
-            onNavigate("/books")
-        },
-        onError(error: AxiosError<ApiError>) {
-            // Better error handling
-            const errorMessage = error.response?.data?.message || error.message || 'An unexpected error occurred';
-            setMessage(errorMessage)
-            setErrorLevel('error')
-            setSnackBar(true);
-        }
-    })
+    const {mutate, isPending} = useMutation({
+    mutationFn: async (data: BookFormData) => {
+        const request = await axios.post(import.meta.env.VITE_API_URL + "/book/add", data, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization" : "Bearer " + sessionStorage.getItem("Authorization")
+            }
+        })
+        return request.data
+    },
+    onSuccess() {
+        setMessage("Book added successfully!")
+        setErrorLevel('success')
+        setSnackBar(true);
+        queryClient.invalidateQueries();
+        onNavigate("/books")
+    },
+    onError(error: AxiosError<ApiError>) {
+        const errorMessage = error.response?.data?.message || error.message || 'An unexpected error occurred';
+        setMessage(errorMessage)
+        setErrorLevel('error')
+        setSnackBar(true);
+    }
+})
 
     const genres = [
         'Fiction',
@@ -137,10 +136,12 @@ export default function AddBook({ onNavigate }: AddBookProps) {
             rating: 1
         },
         validationSchema: validationSchema,
-        onSubmit: mutate
+        onSubmit: (values) => {
+            mutate(values);
+        }
     })
 
-    function handleCloseSnackBar(event?: React.SyntheticEvent | Event, reason?: string) {
+    function handleCloseSnackBar(_?: React.SyntheticEvent | Event, reason?: string) {
         if (reason === 'clickaway') return;
         setSnackBar(false);
     }
@@ -181,7 +182,7 @@ export default function AddBook({ onNavigate }: AddBookProps) {
 
             <Grid container spacing={4}>
                 {/* Main Form - Fix: Add 'item' prop */}
-                <Grid item xs={12} md={8} component="form" onSubmit={formik.handleSubmit}>
+                <Grid size={{ xs: 12, md: 6 }} component="form" onSubmit={formik.handleSubmit}>
                     <Card elevation={4} sx={{ borderRadius: 3 }}>
                         <Box
                             sx={{
@@ -376,7 +377,7 @@ export default function AddBook({ onNavigate }: AddBookProps) {
                 </Grid>
 
                 {/* Sidebar */}
-                <Grid item xs={12} md={4}>
+                <Grid size={{ xs: 12, md: 4 }}>
                     <Stack spacing={3}>
                         {/* Tips Card */}
                         <Paper elevation={2} sx={{ p: 3, borderRadius: 2 }}>

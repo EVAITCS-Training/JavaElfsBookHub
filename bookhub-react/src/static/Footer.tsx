@@ -60,7 +60,7 @@ export const Footer: React.FC<FooterProps> = ({
       <Container maxWidth="lg">
         <Grid container spacing={4} sx={{ mb: 4 }}>
           {/* Company Info */}
-          <Grid item xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Typography variant="h6" sx={{ color: '#3498db', mb: 2 }}>
               BookHub
             </Typography>
@@ -96,7 +96,7 @@ export const Footer: React.FC<FooterProps> = ({
           </Grid>
 
           {/* Quick Links */}
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid size={{ xs: 12, sm: 6, md: 4 }}>
             <Typography variant="h6" sx={{ color: '#3498db', mb: 2 }}>
               Quick Links
             </Typography>
@@ -127,7 +127,7 @@ export const Footer: React.FC<FooterProps> = ({
           </Grid>
 
           {/* Support */}
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid size={{ xs: 12, sm: 6, md: 4 }}>
             <Typography variant="h6" sx={{ color: '#3498db', mb: 2 }}>
               Support
             </Typography>

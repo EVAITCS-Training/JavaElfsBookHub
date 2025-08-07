@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import {
@@ -25,11 +25,22 @@ import {
   LockOutlined,
   VisibilityOutlined,
   VisibilityOffOutlined,
-  PersonAddOutlined,
-  LoginOutlined
+  PersonAddOutlined
 } from '@mui/icons-material';
 import axios from 'axios';
 import { useMutation } from '@tanstack/react-query';
+
+interface RegisterFormData {
+  email: string;
+  password: string;
+  confirmPassword: string;
+  agreeToTerms: boolean;
+}
+
+interface RegisterRequest {
+  email: string;
+  password: string;
+}
 
 interface RegisterProps {
   onNavigate: (path: string) => void;
@@ -38,29 +49,26 @@ interface RegisterProps {
 export default function Register({onNavigate}: RegisterProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const registerPost = async (data) => {
-    const registerInfo = {
-        email: data.email,
-        password: data.password
-    }
-    const response = await axios.post(import.meta.env.VITE_API_URL + "/auth/register", registerInfo, {
+  const registerPost = async (data: RegisterRequest): Promise<void> => {
+    const response = await axios.post(import.meta.env.VITE_API_URL + "/auth/register", data, {
         headers: {
             "Content-Type": "application/json"
         }
     })
 
     if(response.status !== 201) {
-        throw new Error("Invalid Input")
+        throw new Error("Registration failed")
     }
   }
 
-  const {mutate, isPending, isSubmitting, error} = useMutation({
+  const {mutate, isPending} = useMutation({
     mutationFn: registerPost,
     onSuccess() {
         onNavigate("/login")
     },
-    onError(error) {
-        console.error(error.message)
+    onError(error: Error) {
+        console.error("Registration error:", error.message)
+        alert("Registration failed: " + error.message)
     }
   })
 
@@ -86,7 +94,7 @@ export default function Register({onNavigate}: RegisterProps) {
       .oneOf([true], 'You must agree to the terms and conditions')
   });
 
-  const formik = useFormik({
+  const formik = useFormik<RegisterFormData>({
     initialValues: {
       email: '',
       password: '',
@@ -94,7 +102,13 @@ export default function Register({onNavigate}: RegisterProps) {
       agreeToTerms: false
     },
     validationSchema: validationSchema,
-    onSubmit: mutate
+    onSubmit: (values) => {
+      const registerData: RegisterRequest = {
+        email: values.email,
+        password: values.password
+      };
+      mutate(registerData);
+    }
   });
 
   const communityStats = [
@@ -138,7 +152,7 @@ export default function Register({onNavigate}: RegisterProps) {
 
       <Grid container spacing={4} justifyContent="center">
         {/* Registration Form */}
-        <Grid item xs={12} md={6}>
+        <Grid size={{ xs: 12, md: 6 }}>
           <Card elevation={4} sx={{ borderRadius: 3 }}>
             <Box
               sx={{
@@ -294,7 +308,7 @@ export default function Register({onNavigate}: RegisterProps) {
                     variant="contained"
                     size="large"
                     fullWidth
-                    disabled={formik.isSubmitting}
+                    disabled={isPending} 
                     endIcon={<PersonAddOutlined />}
                     sx={{
                       py: 1.5,
@@ -304,7 +318,7 @@ export default function Register({onNavigate}: RegisterProps) {
                       }
                     }}
                   >
-                    {formik.isSubmitting ? 'Creating Account...' : 'Create Account'}
+                    {isPending ? 'Creating Account...' : 'Create Account'}
                   </Button>
 
                   {/* Login Link */}
@@ -323,7 +337,7 @@ export default function Register({onNavigate}: RegisterProps) {
         </Grid>
 
         {/* Benefits Sidebar */}
-        <Grid item xs={12} md={4}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <Stack spacing={3}>
             {/* Welcome Card */}
             <Paper elevation={2} sx={{ p: 3, borderRadius: 2 }}>
@@ -346,7 +360,7 @@ export default function Register({onNavigate}: RegisterProps) {
               </Typography>
               <Grid container spacing={2} sx={{ mt: 1 }}>
                 {communityStats.map((stat, index) => (
-                  <Grid item xs={12} key={index}>
+                  <Grid size={{ xs: 12 }} key={index}>
                     <Box sx={{ textAlign: 'center', py: 1 }}>
                       <Typography variant="h4" fontWeight="bold" color="primary">
                         {stat.number}

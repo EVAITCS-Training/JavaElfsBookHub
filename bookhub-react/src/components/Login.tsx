@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+// bookhub-react/src/components/Login.tsx
+import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import {
@@ -30,6 +31,15 @@ import {
 import axios from 'axios';
 import { useMutation } from '@tanstack/react-query';
 
+interface LoginFormData {
+  username: string;
+  password: string;
+}
+
+interface LoginResponse {
+  token: string;
+}
+
 interface LoginProps {
   onNavigate: (path: string) => void;
 }
@@ -37,7 +47,7 @@ interface LoginProps {
 export default function Login({onNavigate}: LoginProps) {
   const [showPassword, setShowPassword] = useState(false);
 
-  const loginPost = async (data) => {
+  const loginPost = async (data: LoginFormData): Promise<LoginResponse> => {
     const response = await axios.post(import.meta.env.VITE_API_URL + "/auth/login", data, {
         headers: {
             "Content-Type": "application/json"
@@ -57,7 +67,7 @@ export default function Login({onNavigate}: LoginProps) {
         sessionStorage.setItem("Authorization", data.token)
         onNavigate("/books")
     },
-    onError(error) {
+    onError(error: Error) {
         alert(error.message)
     }
   })
@@ -74,13 +84,15 @@ export default function Login({onNavigate}: LoginProps) {
       .required('Password is required')
   });
 
-  const formik = useFormik({
+  const formik = useFormik<LoginFormData>({
     initialValues: {
       username: '', // Maps to email in your system
       password: ''
     },
     validationSchema: validationSchema,
-    onSubmit: mutate 
+    onSubmit: (values) => {
+      mutate(values);
+    }
   });
 
   return (
@@ -107,7 +119,7 @@ export default function Login({onNavigate}: LoginProps) {
 
       <Grid container spacing={4} justifyContent="center">
         {/* Login Form */}
-        <Grid item xs={12} md={6}>
+        <Grid size={{ xs: 12, md: 6 }}>
           <Card elevation={4} sx={{ borderRadius: 3 }}>
             <Box
               sx={{
@@ -240,7 +252,7 @@ export default function Login({onNavigate}: LoginProps) {
         </Grid>
 
         {/* Info Sidebar */}
-        <Grid item xs={12} md={4}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <Stack spacing={3}>
             {/* Welcome Back */}
             <Paper elevation={2} sx={{ p: 3, borderRadius: 2 }}>
