@@ -294,7 +294,7 @@ export default function AddBook({ onNavigate }: AddBookProps) {
                                             size="large"
                                             precision={1}
                                             value={formik.values.rating}
-                                            onChange={(event, newValue) => {
+                                            onChange={(newValue) => {
                                                 formik.setFieldValue('rating', newValue || 1);
                                             }}
                                             onBlur={() => formik.setFieldTouched('rating', true)}

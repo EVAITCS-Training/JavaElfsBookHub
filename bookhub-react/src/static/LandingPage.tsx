@@ -5,8 +5,7 @@ import {
   Button,
   Grid,
   Card,
-  CardContent,
-  Paper,
+  CardContent
 } from '@mui/material';
 import { Star } from '@mui/icons-material';
 
