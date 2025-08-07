@@ -41,6 +41,14 @@ jobs:
                 distribution: 'temurin'
             - name: Build with Maven
               run: cd webserver && mvn clean package -DskipTests
+            - name: Get Current EC2 IP
+              run: |
+                # Get IP from AWS CLI (if you have instance ID)
+                CURRENT_IP=$(aws ec2 describe-instances \
+                  --instance-ids i-1234567890abcdef0 \
+                  --query 'Reservations[*].Instances[*].PublicIpAddress' \
+                  --output text)
+                echo "EC2_IP=$CURRENT_IP" >> $GITHUB_ENV
             - name: Copy JAR to EC2
               uses: appleboy/scp-action@v0.1.7
               with:
