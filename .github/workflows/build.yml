@@ -50,6 +50,8 @@ jobs:
                 source: "webserver/target/webserver-*.jar"
                 target: "/home/${{ secrets.EC2_USER }}/"
                 strip_components: 2
+                timeout: 120s
+                command_timeout: 60s
             - name: Deploy and Run JAR on EC2
               uses: appleboy/ssh-action@v0.1.7
               with:
